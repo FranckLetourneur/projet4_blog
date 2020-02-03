@@ -1,0 +1,72 @@
+h1, h2 {
+    font-family: 'Merienda One', cursive;
+}
+
+body {
+    
+    background: url("../image/alaska.jpg") no-repeat center fixed;
+    background-size: cover;
+}
+
+header h1{
+    text-align: center;
+    margin: 25px 0 25px 0;
+}
+
+nav {
+    background-color:rgba(255,255,255,0.85);
+}
+.navbar-brand {
+    font-weight: 700;
+}
+
+section {
+    background-color:rgba(255,255,255,0.90);
+    margin: 25px 0 25px 0;
+    padding: 25px;
+    min-height: 100%;
+}
+.titreChapitre{
+ text-align: center;   
+}
+
+.commentaire {
+    margin-top: 10px;
+    border: solid 1px #17a2b8;
+    border-radius: 10px;
+}
+
+.commentairePseudo {
+    background-color: #17a2b8;
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+} 
+.commentairePseudo h4 {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+.CommentaireButton {
+    font-size: 0.7em;
+}
+.commentaireTexte {
+    padding: 5px 10px;
+}
+.row {
+    margin: 25px 0 25px 0;
+        margin: 25px 0 25px 0;
+
+
+}
+.card {
+    width: 25%;
+}
+footer {
+    background-color:rgba(255,255,255,0.85);
+    margin: 20px 0 20px 0;
+} 
+
+footer p {
+    text-align: center;
+}
