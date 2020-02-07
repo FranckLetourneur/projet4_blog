@@ -1,7 +1,5 @@
 <?php
-namespace fletour\Blog\model;
-
-require_once("model/Manager.php");
+namespace fletour\model;
 
 class CommentManager extends Manager
 {

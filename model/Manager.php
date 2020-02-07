@@ -1,5 +1,5 @@
 <?php
-namespace fletour\Blog\model;
+namespace fletour\model;
 
 class Manager
 {
