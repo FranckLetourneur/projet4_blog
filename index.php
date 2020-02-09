@@ -28,6 +28,9 @@ try {
                 controller\Controller::moderate($_GET['comment_id']);
             }
         }
+        elseif ($_GET['action'] === 'connexion') {
+            controller\Controller::connexion();
+        }
     } 
     else {
         controller\Controller::listPosts();

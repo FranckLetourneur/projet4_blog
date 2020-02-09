@@ -44,4 +44,12 @@ class controller
         
         header('Location: index.php?action=post&id='.$_GET['id'].'');
     }
+
+    public static function connexion()
+    {
+        $connexionManager = new \fletour\model\ConnexionManager();
+        $data = "";
+        require('view/connexionView.php');
+        
+    }
 }

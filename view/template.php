@@ -49,7 +49,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">connexion</a>
+                        <a class="nav-link" href="index.php?action=connexion">connexion</a>
                     </li>
                 </ul>
             </div>
