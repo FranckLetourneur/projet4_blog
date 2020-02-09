@@ -36,6 +36,7 @@ class controller
         
     }
 
+   
     public static function moderate()
     {
         $comment_id = htmlspecialchars($_GET['comment_id']);
@@ -51,7 +52,7 @@ class controller
     }
 
     public static function checkConnexion()
-    {   if (isset($_POST['userName']) && isset($_POST['userMdp']))
+    {   if (isset($_POST['userName']) && isset($_POST['userMdp']) )
         {
             if ($_POST['userName'] === htmlspecialchars(strip_tags($_POST['userName'])))
             {
@@ -64,23 +65,113 @@ class controller
 
             if ($_POST['userMdp'] === htmlspecialchars(strip_tags($_POST['userMdp'])))
             {
-                $userMdp = password_hash(htmlspecialchars(strip_tags($_POST['userMdp'])), PASSWORD_DEFAULT);
+                $userMdp = htmlspecialchars(strip_tags($_POST['userMdp']));
+                $userMdp_hash = password_hash($userMdp, PASSWORD_DEFAULT);
             }
             else
             {
                 $userMdp = "";
-            }            
+            }
+            
+            $connexionManager = new \fletour\model\ConnexionManager();
+            $userInformation = $connexionManager->checkConnexion($userName);
+
+            $isPasswordCorrect = password_verify($userMdp, $userInformation['password_user']);
+    
+            if (isset($userInformation['pseudo_user']))
+            {
+                    if ($isPasswordCorrect) 
+                    {
+                        echo "enfin";
+                        session_start();
+                        $_SESSION['pseudo_user'] = $userInformation['pseudo_user'];
+                        $_SESSION['role_user'] = $userInformation['role_user'];
+                        echo 'Vous êtes connecté !';
+                    }
+                    else 
+                    {
+                        throw new \Exception( 'Mauvais MdP !');
+                    }
+                
+            }
+            else
+            {
+                    //user inconnu
+                    header('Location: index.php?action=userRegistration');
+            }
+            
         }
 
-        if (!empty($userName) && !empty($userMdp))
-        {
-            $connexionManager = new \fletour\model\ConnexionManager();
-            $connexionManager->checkConnexion($userName, $userMdp);
-        }
+       
+        
         else
         {
             throw new \Exception('formulaire mal rempli');
         }
         
+    }
+
+    
+    public static function userRegistration()
+    {
+       
+        require('view/userRegistrationView.php');
+    }
+
+    public static function userCreate()
+    {   
+        if (isset($_POST['userName']) && isset($_POST['userMdp']) && isset($_POST['userMail']))
+        {
+            if ($_POST['userName'] === htmlspecialchars(strip_tags($_POST['userName'])))
+            {
+                $userName = htmlspecialchars(strip_tags($_POST['userName']));
+            }
+            else
+            {
+                $userName = "";
+            }
+
+            if ($_POST['userMdp'] === htmlspecialchars(strip_tags($_POST['userMdp'])) )
+            {
+                $userMdp = htmlspecialchars(strip_tags($_POST['userMdp']));
+                $userMdp_hash = password_hash($userMdp, PASSWORD_DEFAULT);
+               
+            }
+            else
+            {
+                $userMdp = "";
+            }
+            
+            if ($_POST['userMail'] === htmlspecialchars(strip_tags($_POST['userMail'])))
+            {
+                $userMdp = htmlspecialchars(strip_tags($_POST['userMdp']));
+            }
+            else
+            {
+                $userMail = "";
+            }
+
+            if (!empty($_POST['userName']) && !empty($_POST['userMdp']) && !empty($_POST['userMail']))
+            {
+                $connexionManager = new \fletour\model\ConnexionManager();
+                $userInformation = $connexionManager->checkConnexion($userName);
+                
+                if (isset($userInformation['pseudo_user']))
+                {
+                    throw new \Exception('Ce pseudo existe déjà, merci de choisir un autre pseudo<br><a href="javascript:history.back()">C\'est par ici !</a>');
+                }
+                else
+                { 
+                   
+                    $userInformation = $connexionManager->addUser($_POST['userName'], $userMdp_hash, $_POST['userMail']);
+                    throw new \Exception('enregistrement réalisé');
+                }
+            }
+            else
+            {
+                throw new \Exception('Merci de remplir tout les champs.<br><a href="javascript:history.back()">C\'est par ici !</a>' );
+            }
+            
+        }
     }
 }
