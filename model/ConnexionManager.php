@@ -3,9 +3,10 @@ namespace fletour\model;
 
 class ConnexionManager extends Manager
 {
-    public function connexion()
+    public function checkConnexion($userName, $userMdp)
     {
-        echo "pouet";
+        echo $userName;
+        echo $userMdp;
     }
 
 }

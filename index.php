@@ -15,7 +15,7 @@ try {
                 controller\Controller::post();
             }
             else {
-                throw new Exception('Aucun identifiant de billet envoyé');
+                throw new \Exception('Aucun identifiant de billet envoyé');
             }
         }
         elseif ($_GET['action'] == 'addComment') {
@@ -31,6 +31,10 @@ try {
         elseif ($_GET['action'] === 'connexion') {
             controller\Controller::connexion();
         }
+        elseif ($_GET['action'] === 'checkConnexion') {
+            controller\Controller::checkConnexion();
+        }
+
     } 
     else {
         controller\Controller::listPosts();
@@ -38,7 +42,7 @@ try {
 }
 
 
-catch(Exception $e) { 
+catch(\Exception $e) { 
     $errorMessage = $e->getMessage();
     require('view/errorView.php');
 }

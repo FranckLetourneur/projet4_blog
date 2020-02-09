@@ -47,9 +47,40 @@ class controller
 
     public static function connexion()
     {
-        $connexionManager = new \fletour\model\ConnexionManager();
-        $data = "";
         require('view/connexionView.php');
+    }
+
+    public static function checkConnexion()
+    {   if (isset($_POST['userName']) && isset($_POST['userMdp']))
+        {
+            if ($_POST['userName'] === htmlspecialchars(strip_tags($_POST['userName'])))
+            {
+                $userName = htmlspecialchars(strip_tags($_POST['userName']));
+            }
+            else
+            {
+                $userName = "";
+            }
+
+            if ($_POST['userMdp'] === htmlspecialchars(strip_tags($_POST['userMdp'])))
+            {
+                $userMdp = password_hash(htmlspecialchars(strip_tags($_POST['userMdp'])), PASSWORD_DEFAULT);
+            }
+            else
+            {
+                $userMdp = "";
+            }            
+        }
+
+        if (!empty($userName) && !empty($userMdp))
+        {
+            $connexionManager = new \fletour\model\ConnexionManager();
+            $connexionManager->checkConnexion($userName, $userMdp);
+        }
+        else
+        {
+            throw new \Exception('formulaire mal rempli');
+        }
         
     }
 }
