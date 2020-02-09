@@ -12,7 +12,7 @@ class controller
     }
 
     public static function post()
-    {echo "pouet";
+    {
         $postManager = new \fletour\model\PostManager();
         $commentManager = new \fletour\model\CommentManager();
 
@@ -24,10 +24,10 @@ class controller
 
     public static function addComment($idUser, $author, $postId, $comment)
     {
-        $idUser = htmlspecialchars($idUser);
-        $author = htmlspecialchars($author);
-        $postId = htmlspecialchars($postId);
-        $comment = htmlspecialchars($comment);
+        $idUser = htmlspecialchars(strip_tags($idUser));
+        $author = htmlspecialchars(strip_tags($author));
+        $postId = htmlspecialchars(strip_tags($postId));
+        $comment = htmlspecialchars(strip_tags($comment));
         //ajouter une verif si connecté ou non
         $commentManager = new \fletour\model\CommentManager();
         $comments = $commentManager->addComment($idUser, $author, $postId, $comment);

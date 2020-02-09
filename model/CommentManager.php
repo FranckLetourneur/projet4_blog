@@ -21,7 +21,7 @@ class CommentManager extends Manager
     public function addComment($idUser, $author, $postId, $comment)
     {   
         $db = $this->dbConnect();
-        
+               
         $comments = $db->prepare('INSERT INTO comments(id_user, author, id_blog_post, contents_comment, comment_date) VALUES(?, ?, ?, ?, NOW())');
         if ($idUser === "2")
         {

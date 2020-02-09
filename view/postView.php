@@ -28,14 +28,15 @@ while ($data = $posts->fetch())
 
                                 <div class="form-group">
                                     <label for="pseudoId">Pseudo</label>
-                                    <input type="text" class="form-control" id="pseudoId" aria-describedby="pseudoAide" name="author">
-                                    <small id="pseudoAide" class="form-text text-muted">info sur le pseudo.</small>
+                                    <input type="text" class="form-control border" id="pseudoId" aria-describedby="pseudoAide" name="author">
+                                    <small id="pseudoAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                                 </div>   
                                 <div class="form-group">
                                     <label for="commentaire" >Votre commentaire</label>
                                     <textarea class="form-control" id="commentaire" rows="5" name="comment"></textarea>
+                                    <small id="commentaireAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                                 </div> 
-                                <button type="submit" class="btn btn-info">Submit</button>
+                                <button type="submit" id="submitComment"class="btn btn-info">Submit</button>
                             </form>
                         </div>
                     </div>
