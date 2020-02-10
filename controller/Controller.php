@@ -85,6 +85,7 @@ class controller
                         session_start();
                         $_SESSION['userPseudo'] = $userInformation['userPseudo'];
                         $_SESSION['userRole'] = $userInformation['userRole'];
+                        $_SESSION['userId'] = $userInformation['userId'];
                         header('Location: index.php');
 
                     }

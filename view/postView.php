@@ -30,13 +30,30 @@ while ($data = $posts->fetch())
                             <form action="index.php?action=addComment" method="POST">
                                 <input type="hidden" name="commentBlogPostId" value="<?php echo $data['blogPostId']; ?>">
                                 <!-- user is connected or no ?????-->
-                                <input type="hidden" name="userId" value="2">
+                                <?php
+                                if (isset($_SESSION['userPseudo'])) {
+                                    echo '<input type="hidden" name="userId" value="'. $_SESSION['userId'] .'">';
 
-                                <div class="form-group">
+                                    echo '<input type="hidden" name="userPseudo" value="'. $_SESSION['userPseudo'] .'">';
+
+                                    echo '<h5>Bonjour <strong>'. $_SESSION['userPseudo'] .'</strong>, merci de laisser un commentaire.</h5>';
+                                }
+                                else
+                                {
+                                    echo '<input type="hidden" name="userId" value="2">';
+                                    echo '<div class="form-group">
                                     <label for="pseudoId">Pseudo</label>
-                                    <input type="text" class="form-control border" id="pseudoId" aria-describedby="pseudoAide" name="commentAuthor">
+                                    <input type="text" class="form-control border" id="pseudoId" aria-describedby="pseudoAide" name="commentAuthor" >
                                     <small id="pseudoAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
-                                </div>   
+                                </div>   ';
+                                }
+
+
+
+                                ?>
+                                
+
+                                
                                 <div class="form-group">
                                     <label for="commentaire" >Votre commentaire</label>
                                     <textarea class="form-control" id="commentaire" rows="5" name="comment"></textarea>
