@@ -1,7 +1,9 @@
 <?php 
+session_start();
 
 ob_start(); 
 echo "<div class='d-flex justify-content-around'>";
+
 while ($data = $posts->fetch())
     {
     ?>

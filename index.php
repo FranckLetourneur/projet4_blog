@@ -54,6 +54,10 @@ try {
             controller\Controller::userCreate();
         }
 
+        elseif ($_GET['action'] === 'deconnexion') {
+            controller\Controller::deconnexion();
+        }
+
     } 
     else {
         controller\Controller::listPosts();

@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 ob_start(); 
 ?>        
     <h2 class="text-center">Formulaire de connexion</h2>

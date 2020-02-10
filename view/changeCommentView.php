@@ -1,5 +1,7 @@
 <?php 
 $title = 'Mon blog'; 
+session_start();
+
 ob_start();
 
 ?>

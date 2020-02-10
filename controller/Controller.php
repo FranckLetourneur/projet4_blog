@@ -82,10 +82,11 @@ class controller
             {
                     if ($isPasswordCorrect) 
                     {
-                        echo "enfin";
+                        session_start();
                         $_SESSION['userPseudo'] = $userInformation['userPseudo'];
                         $_SESSION['userRole'] = $userInformation['userRole'];
-                        echo 'Vous êtes connecté !';
+                        header('Location: index.php');
+
                     }
                     else 
                     {
@@ -163,7 +164,7 @@ class controller
                 { 
                    
                     $userInformation = $connexionManager->addUser($_POST['userName'], $userMdp_hash, $_POST['userMail']);
-                    throw new \Exception('enregistrement réalisé');
+                    throw new \Exception('enregistrement réalisé, <br>merci de vous connecter <a href="index.php?action=connexion">ici !</a>');
                 }
             }
             else
@@ -172,5 +173,13 @@ class controller
             }
             
         }
+    }
+
+    public static function deconnexion()
+    {   session_start();
+        $_SESSION = array();
+        session_destroy();
+        header('Location: index.php');
+
     }
 }

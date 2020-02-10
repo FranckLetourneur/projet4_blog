@@ -1,7 +1,7 @@
 <?php 
 ob_start(); 
 ?>        
-    <h2 class="text-center">Formulaire d'inscription'</h2>
+    <h2 class="text-center">Formulaire d'inscription</h2>
     <div class="row justify-content-center">
         <div class="col-xl-4 col-lg-6 col-md-9 col-sm-12">
             <form action="index.php?action=userCreate" method="POST">
