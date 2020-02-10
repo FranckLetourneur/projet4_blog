@@ -22,15 +22,15 @@ class controller
         require('view/postView.php');
     }
 
-    public static function addComment($idUser, $author, $postId, $comment)
+    public static function addComment($idUser, $commentAuthor, $postId, $comment)
     {
         $idUser = htmlspecialchars(strip_tags($idUser));
-        $author = htmlspecialchars(strip_tags($author));
+        $commentAuthor = htmlspecialchars(strip_tags($commentAuthor));
         $postId = htmlspecialchars(strip_tags($postId));
         $comment = htmlspecialchars(strip_tags($comment));
         //ajouter une verif si connecté ou non
         $commentManager = new \fletour\model\CommentManager();
-        $comments = $commentManager->addComment($idUser, $author, $postId, $comment);
+        $comments = $commentManager->addComment($idUser, $commentAuthor, $postId, $comment);
         header('Location: index.php?action=post&id='.$postId.'');
         exit();
         
@@ -39,9 +39,9 @@ class controller
    
     public static function moderate()
     {
-        $comment_id = htmlspecialchars($_GET['comment_id']);
+        $commentId = htmlspecialchars($_GET['commentId']);
         $commentManager = new \fletour\model\CommentManager();
-        $comments = $commentManager->updateReport($comment_id);
+        $comments = $commentManager->updatecommentReport($commentId);
         
         header('Location: index.php?action=post&id='.$_GET['id'].'');
     }
@@ -76,16 +76,15 @@ class controller
             $connexionManager = new \fletour\model\ConnexionManager();
             $userInformation = $connexionManager->checkConnexion($userName);
 
-            $isPasswordCorrect = password_verify($userMdp, $userInformation['password_user']);
+            $isPasswordCorrect = password_verify($userMdp, $userInformation['userPassword']);
     
-            if (isset($userInformation['pseudo_user']))
+            if (isset($userInformation['userId']))
             {
                     if ($isPasswordCorrect) 
                     {
                         echo "enfin";
-                        session_start();
-                        $_SESSION['pseudo_user'] = $userInformation['pseudo_user'];
-                        $_SESSION['role_user'] = $userInformation['role_user'];
+                        $_SESSION['userPseudo'] = $userInformation['userPseudo'];
+                        $_SESSION['userRole'] = $userInformation['userRole'];
                         echo 'Vous êtes connecté !';
                     }
                     else 
@@ -156,7 +155,7 @@ class controller
                 $connexionManager = new \fletour\model\ConnexionManager();
                 $userInformation = $connexionManager->checkConnexion($userName);
                 
-                if (isset($userInformation['pseudo_user']))
+                if (isset($userInformation['userPseudo']))
                 {
                     throw new \Exception('Ce pseudo existe déjà, merci de choisir un autre pseudo<br><a href="javascript:history.back()">C\'est par ici !</a>');
                 }

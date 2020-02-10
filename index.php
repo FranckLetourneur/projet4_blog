@@ -23,15 +23,15 @@ try {
 
 
         elseif ($_GET['action'] == 'addComment') {
-            controller\Controller::addComment($_POST['id_user'], $_POST['author'], $_POST['id_blog_post'], $_POST['comment']);
+            controller\Controller::addComment($_POST['userId'], $_POST['commentAuthor'], $_POST['commentBlogPostId'], $_POST['comment']);
         }
 
 
         elseif ($_GET['action'] == 'moderate')
         {
-            if (isset($_GET['comment_id']) && $_GET['comment_id'] > 0) 
+            if (isset($_GET['commentId']) && $_GET['commentId'] > 0) 
             {
-                controller\Controller::moderate($_GET['comment_id']);
+                controller\Controller::moderate($_GET['commentId']);
             }
         }
 

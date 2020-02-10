@@ -40,9 +40,9 @@ class controller
 
     public static function moderate()
     {
-        $comment_id = htmlspecialchars($_GET['comment_id']);
+        $commentId = htmlspecialchars($_GET['commentId']);
         $commentManager = new \fletour\Blog\model\CommentManager();
-        $comments = $commentManager->updateReport($comment_id);
+        $comments = $commentManager->updatecommentReport($commentId);
         
         header('Location: index.php?action=post&id='.$_GET['id'].'');
     }

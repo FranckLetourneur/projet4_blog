@@ -1,12 +1,17 @@
 <?php 
 
 ob_start(); 
+if (isset($_SESSION['prenom']))
+            {
+                echo 'Bonjour ' . $_SESSION['prenom'];
+            }	
 while ($data = $posts->fetch())
-    {	
+    {
+         
     ?>
-    <h2 class="titreChapitre text-info">Chapitre <?= $data['id_post']?> : <?= htmlspecialchars($data['title_post'])  ?></h2>
+    <h2 class="titreChapitre text-info">Chapitre <?= $data['blogPostId']?> : <?= htmlspecialchars($data['blogPostTitle'])  ?></h2>
             <p>
-                <?= htmlspecialchars($data['contents_post'])  ?>
+                <?= htmlspecialchars($data['blogPostContents'])  ?>
             </p> 
             <button class="btn btn-outline-info" data-toggle="modal" data-target="#modalCommentaire">laissez-un commentaire</button>
         
@@ -22,13 +27,13 @@ while ($data = $posts->fetch())
                         </div>
                         <div class="modal-body">
                             <form action="index.php?action=addComment" method="POST">
-                                <input type="hidden" name="id_blog_post" value="<?php echo $data['id_post']; ?>">
+                                <input type="hidden" name="commentBlogPostId" value="<?php echo $data['blogPostId']; ?>">
                                 <!-- user is connected or no ?????-->
-                                <input type="hidden" name="id_user" value="2">
+                                <input type="hidden" name="userId" value="2">
 
                                 <div class="form-group">
                                     <label for="pseudoId">Pseudo</label>
-                                    <input type="text" class="form-control border" id="pseudoId" aria-describedby="pseudoAide" name="author">
+                                    <input type="text" class="form-control border" id="pseudoId" aria-describedby="pseudoAide" name="commentAuthor">
                                     <small id="pseudoAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                                 </div>   
                                 <div class="form-group">
@@ -51,19 +56,19 @@ while ($data = $posts->fetch())
         <div class="commentaire">
             <div class="commentairePseudo text-light">
                 <h4><?php
-                    if ($dataComment['pseudo_user'] == "non_reconnu")
+                    if ($dataComment['userPseudo'] == "non_reconnu")
                     {
-                        echo htmlspecialchars($dataComment['author']); 
+                        echo htmlspecialchars($dataComment['commentAuthor']); 
                     }
                     else
                     {
-                        echo htmlspecialchars($dataComment['pseudo_user']);  
+                        echo htmlspecialchars($dataComment['userPseudo']);  
                     }
                     ?></h4> 
-                   <form action="index.php?action=moderate&comment_id=<?= $dataComment['comment_id']; ?>&&id=<?= $data['id_post']; ?>" method="post" class="float-right">
+                   <form action="index.php?action=moderate&commentId=<?= $dataComment['commentId']; ?>&&id=<?= $data['blogPostId']; ?>" method="post" class="float-right">
                         
                         <?php
-                            switch ($dataComment['report']) {
+                            switch ($dataComment['commentReport']) {
                                 case '0':
                                     echo "<button class=\"btn btn-danger form-control CommentaireButton\">Signaler ce commentaire</button>";
                                     break;
@@ -81,7 +86,7 @@ while ($data = $posts->fetch())
                    </form>
                 </div>
                 <div class="commentaireTexte">
-                    <p><?= htmlspecialchars($dataComment['contents_comment'])  ?></p>
+                    <p><?= htmlspecialchars($dataComment['commentContents'])  ?></p>
                 </div>
 
             </div>
