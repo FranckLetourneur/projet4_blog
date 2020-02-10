@@ -7,7 +7,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Merienda+One&display=swap" rel="stylesheet"> 
     <link href="public/css/bootstrap.css" rel="stylesheet">
-    <link href="public/css/style.css" rel="stylesheet">
+    <link href="public/css/style<?php if (isset($_SESSION['userPseudo'])) {echo 'Admin';}?>.css" rel="stylesheet">
 
     <title>Billet simple pour l'Alaska, de Jean Forteroche</title>
 </head>

@@ -1,0 +1,89 @@
+h1, h2 {
+    font-family: 'Merienda One', cursive;
+    color:white !important;
+}
+
+body {
+    
+    background: url("../image/alaskaAdmin.jpg") no-repeat center fixed;
+    background-size: cover;
+}
+
+header h1{
+    text-align: center;
+    margin: 25px 0 25px 0;
+
+}
+
+nav {
+    background-color:rgba(0,0,0,0.85);
+}
+.navbar-brand {
+    font-weight: 700;
+
+}
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.8) !important;
+
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: rgba(255,255,255,1) !important;
+
+}
+section {
+    background-color:rgba(255,255,255,0.90);
+    margin: 25px 0 25px 0;
+    padding: 25px;
+    min-height: 100%;
+}
+.titreChapitre{
+ text-align: center;   
+}
+
+.commentaire {
+    margin-top: 10px;
+    border: solid 1px #17a2b8;
+    border-radius: 10px;
+}
+
+.commentairePseudo {
+    background-color: #17a2b8;
+    padding: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+} 
+.commentairePseudo h4 {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+.CommentaireButton {
+    font-size: 0.7em;
+}
+.commentaireTexte {
+    padding: 5px 10px;
+}
+.row {
+    margin: 25px 0 25px 0;
+        margin: 25px 0 25px 0;
+
+
+}
+.card {
+    width: 25%;
+}
+footer {
+    background-color:rgba(255,255,255,0.85);
+    margin: 20px 0 20px 0;
+} 
+
+footer p {
+    text-align: center;
+}
+ .hidden {
+     display: none;
+ }
+
+ .show {
+     display: block;
+ }
