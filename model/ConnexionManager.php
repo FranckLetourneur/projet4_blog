@@ -11,15 +11,26 @@ class ConnexionManager extends Manager
         $req->execute(array($userName));
         $userInformation = $req->fetch();
 
+        if (isset($userInformation['userPseudo']))
+        {
+            $this->updateLastConnexionDate($userInformation['userId']);
+        }
         return $userInformation;
     }
 
     public function addUser($userName, $userMdp, $userMail)
     {
         $db = $this->dbConnect();
-        $user = $db->prepare('INSERT INTO user(userPseudo, userPassword, userMail, registration_date, last_connection_date, userRole) VALUES(?, ?, ?, NOW(), NOW(), ?)');
+        $user = $db->prepare('INSERT INTO user(userPseudo, userPassword, userMail, registrationDate, lastConnexionDate, userRole) VALUES(?, ?, ?, NOW(), NOW(), ?)');
 
         $affectedLines = $user->execute(array($userName, $userMdp, $userMail, 9));
+        return $affectedLines;
+    }
+
+    protected function updateLastConnexionDate ($userId) {
+        $db = $this->dbConnect();
+        $user = $db->prepare('UPDATE user SET lastConnexionDate = NOW() WHERE userId = ?');
+        $affectedLines = $user->execute(array($userId));
         return $affectedLines;
     }
 

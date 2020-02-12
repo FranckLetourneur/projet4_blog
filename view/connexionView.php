@@ -1,5 +1,5 @@
 <?php 
-session_start();
+//session_start();
 
 ob_start(); 
 ?>        
@@ -10,14 +10,15 @@ ob_start();
                 <div class="form-group">
                     <label for="pseudoId">Pseudo</label>
                     <input type="text" class="form-control border" id="pseudoId" aria-describedby="pseudoAide" name="userName">
-                    <small id="pseudoAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
+                    <small id="pseudoIdAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                 </div>   
                 <div class="form-group">
                     <label for="pseudoId">Mot de Passe</label>
                     <input type="password" class="form-control border" id="mdp" aria-describedby="mdpAide" name="userMdp">
-                    <small id="pseudoAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
+                    <small id="mdpAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                </div>                          
-                <button type="submit" id="submitConnexion"class="btn btn-info">Submit</button>
+                <button type="submit" id="submitButton"class="btn btn-info" disabled>Submit</button>
+                <p>Inscrivez-vous si vous le souhaitez : <a href="http://localhost:8888/blog_Jean_Forteroche/index.php?action=userRegistration">ici</a></p>
             </form>
         </div>
     </div>

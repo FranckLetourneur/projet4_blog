@@ -1,5 +1,5 @@
 <?php 
-session_start();
+//session_start();
 
 ob_start(); 
 echo "<div class='d-flex justify-content-around'>";
@@ -12,7 +12,7 @@ while ($data = $posts->fetch())
         <div class="card-body">
             <h5 class="card-title">Chap. <?= htmlspecialchars($data['blogPostId'])  ?> : <?= htmlspecialchars($data['blogPostTitle'])  ?></h5>
             <p class="card-text"><?= substr($data['blogPostContents'],0,200) ?></p>
-            <a href="index.php?action=post&id=<?= $data['blogPostId']?>" class="btn btn-primary">Go somewhere</a>
+            <a href="index.php?action=post&id=<?= $data['blogPostId']?>" class="btn btn-primary">Lire la suite</a>
         </div>
     </div>
 

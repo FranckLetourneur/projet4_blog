@@ -1,5 +1,5 @@
 <?php 
-session_start();
+//session_start();
 
 ob_start(); 
 if (isset($_SESSION['prenom']))
@@ -44,7 +44,7 @@ while ($data = $posts->fetch())
                                     echo '<div class="form-group">
                                     <label for="pseudoId">Pseudo</label>
                                     <input type="text" class="form-control border" id="pseudoId" aria-describedby="pseudoAide" name="commentAuthor" >
-                                    <small id="pseudoAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
+                                    <small id="pseudoIdAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                                 </div>   ';
                                 }
 
@@ -59,7 +59,7 @@ while ($data = $posts->fetch())
                                     <textarea class="form-control" id="commentaire" rows="5" name="comment"></textarea>
                                     <small id="commentaireAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                                 </div> 
-                                <button type="submit" id="submitComment"class="btn btn-info">Submit</button>
+                                <button type="submit" id="submitButton"class="btn btn-info" disabled>Envoyer</button>
                             </form>
                         </div>
                     </div>

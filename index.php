@@ -1,5 +1,7 @@
 <?php
 namespace fletour;
+session_start();
+
 require 'vendor/autoload.php'; 
 \fletour\Autoloader::register(); 
 

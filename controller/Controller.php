@@ -28,7 +28,16 @@ class controller
         $commentAuthor = htmlspecialchars(strip_tags($commentAuthor));
         $postId = htmlspecialchars(strip_tags($postId));
         $comment = htmlspecialchars(strip_tags($comment));
-        //ajouter une verif si connecté ou non
+
+        $connexionManager = new \fletour\model\ConnexionManager();
+        $userInformation = $connexionManager->checkConnexion($commentAuthor);
+
+        if (isset($userInformation['userPseudo']))
+        {
+            throw new \Exception( ' Vous avez essayé de poster un commentaire sous un nom enregistré. S\'il s\'agit du votre, <a href="http://localhost:8888/blog_Jean_Forteroche/index.php?action=connexion">connectez-vous </a>, merci !');
+
+        }
+
         $commentManager = new \fletour\model\CommentManager();
         $comments = $commentManager->addComment($idUser, $commentAuthor, $postId, $comment);
         header('Location: index.php?action=post&id='.$postId.'');
@@ -82,7 +91,7 @@ class controller
             {
                     if ($isPasswordCorrect) 
                     {
-                        session_start();
+                       // session_start();
                         $_SESSION['userPseudo'] = $userInformation['userPseudo'];
                         $_SESSION['userRole'] = $userInformation['userRole'];
                         $_SESSION['userId'] = $userInformation['userId'];
@@ -177,7 +186,7 @@ class controller
     }
 
     public static function deconnexion()
-    {   session_start();
+    {   //session_start();
         $_SESSION = array();
         session_destroy();
         header('Location: index.php');
