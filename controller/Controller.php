@@ -7,8 +7,16 @@ class controller
     {
         $postManager = new \fletour\model\PostManager(); // Création d'un objet
         $posts = $postManager->getPosts(); // Appel d'une fonction de cet objet
-    
-        require('view/listPostsView.php');
+        
+        if (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 0)
+        {
+            require('view/back/adminHome.php');
+        }
+        else
+        {
+            require('view/listPostsView.php');
+        }
+       
     }
 
     public static function post()
@@ -22,12 +30,13 @@ class controller
         require('view/postView.php');
     }
 
-    public static function addComment($idUser, $commentAuthor, $postId, $comment)
+    public static function addComment($idUser, $commentAuthor, $postId, $comment, $startingCommentId)
     {
         $idUser = htmlspecialchars(strip_tags($idUser));
         $commentAuthor = htmlspecialchars(strip_tags($commentAuthor));
         $postId = htmlspecialchars(strip_tags($postId));
         $comment = htmlspecialchars(strip_tags($comment));
+        $startingCommentId = htmlspecialchars(strip_tags($startingCommentId));  
 
         $connexionManager = new \fletour\model\ConnexionManager();
         $userInformation = $connexionManager->checkConnexion($commentAuthor);
@@ -39,8 +48,15 @@ class controller
         }
 
         $commentManager = new \fletour\model\CommentManager();
-        $comments = $commentManager->addComment($idUser, $commentAuthor, $postId, $comment);
-        header('Location: index.php?action=post&id='.$postId.'');
+        $comments = $commentManager->addComment($idUser, $commentAuthor, $postId, $comment, $startingCommentId);
+        if ($startingCommentId != 0 && $_SESSION['userRole'] == 0)
+        {
+            header('Location: index.php?action=commentsAdmin');
+        }
+        else
+        {
+            header('Location: index.php?action=post&id='.$postId.'');
+        }
         exit();
         
     }
@@ -91,7 +107,6 @@ class controller
             {
                     if ($isPasswordCorrect) 
                     {
-                       // session_start();
                         $_SESSION['userPseudo'] = $userInformation['userPseudo'];
                         $_SESSION['userRole'] = $userInformation['userRole'];
                         $_SESSION['userId'] = $userInformation['userId'];
@@ -106,7 +121,7 @@ class controller
             }
             else
             {
-                    //user inconnu
+                    //user unkwon
                     header('Location: index.php?action=userRegistration');
             }
             

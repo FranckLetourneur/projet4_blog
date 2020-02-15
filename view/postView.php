@@ -2,17 +2,14 @@
 //session_start();
 
 ob_start(); 
-if (isset($_SESSION['prenom']))
-            {
-                echo 'Bonjour ' . $_SESSION['prenom'];
-            }	
+
 while ($data = $posts->fetch())
     {
          
     ?>
     <h2 class="titreChapitre text-info">Chapitre <?= $data['blogPostId']?> : <?= htmlspecialchars($data['blogPostTitle'])  ?></h2>
             <p>
-                <?= htmlspecialchars($data['blogPostContents'])  ?>
+                <?= $data['blogPostContents']  ?>
             </p> 
             <button class="btn btn-outline-info" data-toggle="modal" data-target="#modalCommentaire">laissez-un commentaire</button>
         
@@ -56,7 +53,7 @@ while ($data = $posts->fetch())
                                 
                                 <div class="form-group">
                                     <label for="commentaire" >Votre commentaire</label>
-                                    <textarea class="form-control" id="commentaire" rows="5" name="comment"></textarea>
+                                    <textarea class="form-control" id="commentaire" rows="5" name="commentContents"></textarea>
                                     <small id="commentaireAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                                 </div> 
                                 <button type="submit" id="submitButton"class="btn btn-info" disabled>Envoyer</button>
@@ -67,47 +64,61 @@ while ($data = $posts->fetch())
             </div>
             <!-- fin modal commentaire-->
     
-       <?php
-       while ($dataComment = $comments->fetch())
-       {
-       ?>
-        <div class="commentaire">
-            <div class="commentairePseudo text-light">
-                <h4><?php
-                    if ($dataComment['userPseudo'] == "non_reconnu")
-                    {
-                        echo htmlspecialchars($dataComment['commentAuthor']); 
-                    }
-                    else
-                    {
-                        echo htmlspecialchars($dataComment['userPseudo']);  
-                    }
-                    ?></h4> 
-                   <form action="index.php?action=moderate&commentId=<?= $dataComment['commentId']; ?>&&id=<?= $data['blogPostId']; ?>" method="post" class="float-right">
-                        
-                        <?php
-                            switch ($dataComment['commentReport']) {
-                                case '0':
-                                    echo "<button class=\"btn btn-danger form-control CommentaireButton\">Signaler ce commentaire</button>";
-                                    break;
-                                case '1':
+        <?php
+        while ($dataComment = $comments->fetch())
+        {
+
+            if ($dataComment['startingCommentId'] == 0) 
+            {   ?>
+                <div class="commentaire">
+                    <div class="commentairePseudo text-light">
+                        <h4>
+                            <?php
+                                if ($dataComment['userPseudo'] == "non_reconnu")
+                                {
+                                    echo htmlspecialchars($dataComment['commentAuthor']); 
+                                }
+                                else
+                                {
+                                    echo htmlspecialchars($dataComment['userPseudo']);  
+                                }
+                            ?>
+                        </h4> 
+                    
+                        <form action="index.php?action=moderate&commentId=<?= $dataComment['commentId']; ?>&&id=<?= $data['blogPostId']; ?>" method="post" class="float-right">
+                            <?php
+                                switch ($dataComment['commentReport']) {
+                                    case 1:
                                     echo "<button class=\"btn-warning form-control CommentaireButton\">Attente modération</button>";
                                     break;
-                                    
-                                case '2':
+
+                                    case 2:
+                                        echo "<button class=\"btn btn-danger form-control CommentaireButton\">Signaler ce commentaire</button>";
+                                        break;
+                                                
+                                    case 3:
                                     echo "<button class=\"btn-success form-control CommentaireButton\">Commentaire Validé</button>";
                                     break;
-                                    
+                                            
+                                }
+                            ?>
+                        </form>
+                    </div>
+                    <div class="commentaireTexte">
+                        <p><?= htmlspecialchars($dataComment['commentContents'])  ?></p>
+                        <?php 
+                            if ($dataComment['answerId'] !=0) 
+                            {
+                                echo "réponse de Jean Forteroche : ";
+                                echo "<em>".$dataComment['answerContents']."</em>";
                             }
                         ?>
-                        
-                   </form>
-                </div>
-                <div class="commentaireTexte">
-                    <p><?= htmlspecialchars($dataComment['commentContents'])  ?></p>
-                </div>
-
-            </div>
+                    </div>
+               </div>
+               <?php
+            }
+       ?>
+        
         
       <?php } 
        ?>

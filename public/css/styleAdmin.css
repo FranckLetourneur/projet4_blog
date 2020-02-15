@@ -87,3 +87,17 @@ footer p {
  .show {
      display: block;
  }
+
+
+ .commentsNews {
+     text-align: center;
+ }
+
+ .pictoCommentsAdmin a:hover {
+     color:red !important;
+ }
+
+ .sansPadding {
+     padding: 0px;
+ }
+

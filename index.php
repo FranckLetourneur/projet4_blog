@@ -25,7 +25,15 @@ try {
 
 
         elseif ($_GET['action'] == 'addComment') {
-            controller\Controller::addComment($_POST['userId'], $_POST['commentAuthor'], $_POST['commentBlogPostId'], $_POST['comment']);
+            if (!isset($_POST['startingCommentId'])) 
+            {   
+                $startingCommentId = 0;
+            }
+            else
+            {
+                $startingCommentId = $_POST['startingCommentId'];
+            }
+            controller\Controller::addComment($_POST['userId'], $_POST['commentAuthor'], $_POST['commentBlogPostId'], $_POST['commentContents'], $startingCommentId);
         }
 
 
@@ -52,14 +60,54 @@ try {
         }
 
         elseif ($_GET['action'] === 'userCreate') {
-        //    var_dump $_POST;
             controller\Controller::userCreate();
         }
 
+        
         elseif ($_GET['action'] === 'deconnexion') {
             controller\Controller::deconnexion();
         }
 
+        elseif (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 0) {
+            if ($_GET['action'] === 'commentsAdmin') {
+                controller\ControllerBack::commentsAdmin();
+            }
+
+            elseif ($_GET['action'] === 'commentsValidation' && isset($_GET['id'])) {
+                controller\ControllerBack::commentsValidate($_GET['id']);
+            }
+
+            elseif ($_GET['action'] === 'commentsModify' && isset($_GET['id'])) {
+                controller\ControllerBack::commentsModify($_GET['id']);
+            }
+
+            elseif ($_GET['action'] === 'commentsUpdate') {
+                controller\ControllerBack::commentUpdate($_POST['commentId'], $_POST['commentContents']);
+            }
+
+            elseif ($_GET['action'] === 'commentsDelete') {
+                controller\ControllerBack::commentsDelete($_GET['id']);
+            }
+
+            elseif ($_GET['action'] === 'newPost') {
+                require('view/back/newPost.php');
+            }
+
+            elseif ($_GET['action'] === 'saveNewPost'){
+                controller\ControllerBack::saveNewPost($_POST['blogPostTitle'],$_POST['textPost']);
+            }
+
+
+
+            
+            else {
+                throw new \Exception("Soit je ne connais pass cette page, soit vous n'avez pas le droit d'y accéder. Désolé");
+            }
+        }
+        
+        else {
+            throw new \Exception("erreur 404");
+        }
     } 
     else {
         controller\Controller::listPosts();

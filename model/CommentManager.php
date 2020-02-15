@@ -7,57 +7,44 @@ class CommentManager extends Manager
     {
         $db = $this->dbConnect();
     
-        $comments = $db->prepare('SELECT c.commentId, c.commentsUserId, c.commentAuthor, c.commentBlogPostId, c.commentContents, c.commentReport, DATE_FORMAT(c.commentDate, \'%d/%m/%Y à %Hh%imin%ss\') AS commentDate_fr, u.userId, u.userPseudo 
-        FROM comments c 
-        INNER JOIN user u 
-        ON c.commentsUserId = u.userId
-        WHERE commentBlogPostId = ? ORDER BY commentDate DESC');
+        $comments = $db->prepare('SELECT c.commentId, c.commentsUserId, c.commentAuthor, c.commentBlogPostId, c.commentContents, c.commentReport, 
+            DATE_FORMAT(c.commentDate, \'%d/%m/%Y à %Hh%imin%ss\') AS commentDate_fr, c.startingCommentId, u.userId, u.userPseudo, 
+            (SELECT commentId FROM comments WHERE startingCommentId = c.commentId) AS answerId,
+            (SELECT commentContents FROM comments WHERE startingCommentId = c.commentId) AS answerContents
+            FROM comments c 
+            INNER JOIN user u 
+            ON c.commentsUserId = u.userId
+            WHERE commentBlogPostId = ? ORDER BY commentDate DESC');
         $comments->execute(array($postId));
         
         return $comments;
     }
 
 
-    public function addComment($userId, $commentAuthor, $postId, $comment)
+    public function addComment($userId, $commentAuthor, $postId, $comment, $startingCommentId )
     {   
         $db = $this->dbConnect();
                
-        $comments = $db->prepare('INSERT INTO comments(commentsUserId, commentAuthor, commentBlogPostId, commentContents, commentDate) VALUES(?, ?, ?, ?, NOW())');
-        if ($userId === "2")
+        $comments = $db->prepare('INSERT INTO comments(commentsUserId, commentAuthor, commentBlogPostId, commentContents, commentDate, startingCommentId) VALUES(?, ?, ?, ?, NOW(), ?)');
+        if ($userId === "2")                                                            
         {
-            $affectedLines = $comments->execute(array($userId, $commentAuthor, $postId,  $comment));
+            $affectedLines = $comments->execute(array($userId, $commentAuthor, $postId,  $comment, $startingCommentId ));
         }
         else
         {   
             $commentAuthor="";
-            $affectedLines = $comments->execute(array($userId, $commentAuthor, $postId,  $comment));
+            $affectedLines = $comments->execute(array($userId, $commentAuthor, $postId,  $comment, $startingCommentId ));
         }
         
 
         return $affectedLines;
     }
 
-    public function getOneComment($id)
-    {
-        $db = $this->dbConnect();
+    
 
-        $req = $db->prepare('SELECT id, comment FROM comments WHERE id = ?');
-        $req->execute(array($id));
-        $oneComment = $req->fetch();
-        return $oneComment;
-    }
+    
 
-    public function updateCom($id, $comment)
-    {                
-        $db = $this->dbConnect();
-
-        $req = $db->prepare("UPDATE comments SET comment = ? WHERE commentId = ?");
-        $affectedLines =$req->execute(array($comment, $id));
-
-        return $affectedLines;
-    } 
-
-    public function updatecommentReport($commentId)
+    public function updateCommentReport($commentId)
     {                
         $db = $this->dbConnect();
 
@@ -66,4 +53,14 @@ class CommentManager extends Manager
 
         return $affectedLines;
     }
+
+    public function updateComment($id, $comment)
+    {                
+        $db = $this->dbConnect();
+
+        $req = $db->prepare("UPDATE comments SET comment = ? WHERE commentId = ?");
+        $affectedLines =$req->execute(array($comment, $id));
+
+        return $affectedLines;
+    } 
 }

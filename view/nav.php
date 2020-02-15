@@ -21,7 +21,8 @@
                     Menu auteur
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="index.php?action=newPost">Ecrire</a>
+                    <a class="dropdown-item" href="index.php?action=commentsAdmin">Gestion commentaires</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>

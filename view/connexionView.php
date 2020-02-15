@@ -1,5 +1,4 @@
 <?php 
-//session_start();
 
 ob_start(); 
 ?>        
@@ -24,7 +23,6 @@ ob_start();
     </div>
                     
 <?php
-//$posts->closeCursor();
 $content = ob_get_clean(); 
 require('template.php'); 
 

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <script type="text/javascript" src='https://cdn.tiny.cloud/1/ef2c2fk762vnx8shkq599cvbncmbxgqwidf78qokx5t7g6sr/tinymce/5/tinymce.min.js' referrerpolicy="origin"> </script>
     <link href="https://fonts.googleapis.com/css?family=Merienda+One&display=swap" rel="stylesheet"> 
+    <script src="https://kit.fontawesome.com/41c10d41ff.js" crossorigin="anonymous"></script>
     <link href="public/css/bootstrap.css" rel="stylesheet">
     <link href="public/css/style<?php if (isset($_SESSION['userRole']) && $_SESSION['userRole'] == '0') {echo 'Admin';}?>.css" rel="stylesheet">
 
