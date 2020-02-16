@@ -16,17 +16,27 @@
                 if (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 0)
                {
             ?>
-                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Menu auteur
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="index.php?action=newPost">Ecrire</a>
-                    <a class="dropdown-item" href="index.php?action=commentsAdmin">Gestion commentaires</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu auteur
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="index.php?action=newPost">Ecrire un nouveau chapitre</a>
+                        <a class="dropdown-item" href="index.php?action=listBlogPost">Lister tous les chapitres</a>
+                        <a class="dropdown-item" href="index.php?action=numberBlogPost"> Numéroter les chapitres</a>
+                        <a class="dropdown-item" href="index.php?action=manageTrash">Gérer la corbeille</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="index.php?action=commentsAdmin">Gérer les commentaires</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu lecteur
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="index.php?action=listPosts&list=list">accueil lecteur</a>
+                    </div>
+                </li>
             <?php
                } 
 

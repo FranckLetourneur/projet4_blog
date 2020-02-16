@@ -94,12 +94,50 @@ try {
             }
 
             elseif ($_GET['action'] === 'saveNewPost'){
-                controller\ControllerBack::saveNewPost($_POST['blogPostTitle'],$_POST['textPost']);
+                controller\ControllerBack::saveNewPost($_POST['blogPostId'],$_POST['blogPostTitle'],$_POST['textPost']);
+            }
+
+            elseif  ($_GET['action'] === 'modifyPost' && isset($_GET['id']) && $_GET['id'] != 0){
+                controller\ControllerBack::modifyPost($_GET['id']);
+            }
+
+            elseif ($_GET['action'] === 'deletePost' && isset($_GET['id']) && $_GET['id'] != 0) {
+                controller\ControllerBack::deletePost($_GET['id']);
+            }
+
+            elseif ($_GET['action'] === 'unDeletePost' && isset($_GET['id']) && $_GET['id'] != 0) {
+                controller\ControllerBack::unDeletePost($_GET['id']);
+            }
+
+            elseif ($_GET['action'] === 'modifyPostStatus' && isset ($_GET['id']) && $_GET['id'] != 0) {
+                controller\ControllerBack::modifyPostStatus($_GET['id']);
+            }
+
+            elseif ($_GET['action'] === 'listBlogPost') {
+                controller\ControllerBack::listBlogPost();
+            }
+
+            elseif ($_GET['action'] === 'manageTrash') {
+                controller\ControllerBack::manageTrash();
+            }
+
+            elseif ($_GET['action'] === 'numberBlogPost') {
+                controller\ControllerBack::numberBlogPost();
+            }
+
+            elseif ($_GET['action'] === 'updateBlogPostId') {
+                controller\ControllerBack::updateBlogPostId($_POST['blogPostId'], $_POST['newBlogPostId']);
+            }
+
+            elseif ($_GET['action'] === 'updateIncrementingBlogPost') {
+                controller\ControllerBack::updateIncrementingBlogPost();
+            }
+
+            elseif ($_GET['action'] === 'erasePost' && isset($_GET['id'])) {
+                controller\ControllerBack::erasePost($_GET['id']);
             }
 
 
-
-            
             else {
                 throw new \Exception("Soit je ne connais pass cette page, soit vous n'avez pas le droit d'y accéder. Désolé");
             }

@@ -7,7 +7,6 @@ ob_start();
 <h5>Continuer sur un chapitre commencé ?</h5>
 
 <?php
-
 while ($data = $posts->fetch()) {
     if ($data['blogPostStatus'] == 'inProgress') {
         $tricolore = 'Red';
@@ -32,18 +31,12 @@ while ($data = $posts->fetch()) {
 <?php
     }
 }
-$result = $comments->fetchAll();
-
 ?>
 
-
+<h5>Il y a de nouveaux commentaires signalés, souhaitez-vous les consulter ?</h5>
 <?php
-$countDanger = 0;
-foreach ($result as $dataComment){
-
-    if ($dataComment['commentReport'] == 1  && $dataComment['startingCommentId'] == 0) {
-        $countDanger++;
-        if ($countDanger == 1) {echo"<h5>Il y a de nouveaux commentaires signalés :</h5>";}
+while ($dataComment = $comments->fetch()) {
+    if ($dataComment['commentReport'] == 1) {
 ?>
         <div class="d-flex flex-row mb-4 border border-danger">
             <div class="d-flex flex-column col-11 sansPadding ">
@@ -77,51 +70,8 @@ foreach ($result as $dataComment){
         </div>
 <?php
     }
-    unset($dataComment);
 }
-?>
-<?php
-$countWarning =0;
-foreach ($result as $dataComment){
 
-    if ($dataComment['commentReport'] == 2 && $dataComment['startingCommentId'] == 0) {
-        $countWarning++;
-        if ($countDanger == 1) {echo"<h5>Il y a de nouveaux commentaires que vous n'avez pas validé :</h5>";}
-?>
-        <div class="d-flex flex-row mb-4 border border-warning">
-            <div class="d-flex flex-column col-11 sansPadding ">
-                <div class="d-flex flex-row bg-warning text-white">
-                    <div class="commentsNews col">Chap. <?= $dataComment['commentBlogPostId']; ?></div>
-                    <div class="commentsNews col"><?php if ($dataComment['commentsUserId'] != 2) {
-                                                        echo $dataComment['userPseudo'];
-                                                    }; ?></div>
-                    <div class="commentsNews col"><?= $dataComment['commentAuthor']; ?></div>
-                    <div class="commentsNews col"><?= $dataComment['commentDate_fr']; ?></div>
-                </div>
-                <div>
-                    <?php
-
-                    echo '<p class="commentaireTexte">' . htmlspecialchars($dataComment['commentContents']) . '</p>';
-
-                    if ($data['answerId'] != 0) {
-                        echo '<hr><p class="commentaireTexte">Votre réponse : <br>';
-                        echo '<em>' . $dataComment['answerContents'] . '</em></p>';
-                    }
-                    ?>
-
-
-                </div>
-            </div>
-            <div class="p-2 d-flex col-1 text-center pictoCommentsAdmin">
-                <a href="index.php?action=commentsValidation&id=<?= $dataComment['commentId'] ?>" class="text-dark" title="Pour valider le commentaire"><i class="p-2 fas fa-check-square fa-lg"></i></a>
-                <a href="index.php?action=commentsModify&id=<?= $dataComment['commentId'] ?>" class="text-dark" title="Pour répondre au commentaire ou corriger votre réponse"><i class="p-2 fas fa-pencil-alt fa-lg "></i></a>
-                <a href="index.php?action=commentsDelete&id=<?= $dataComment['commentId'] ?>" class="text-dark" title="Pour supprimer le commentaire"><i class="p-2 fas fa-trash-alt fa-lg"></i></a>
-            </div>
-        </div>
-<?php
-    }
-    unset($dataComment);
-}
 
 $comments->closeCursor();
 $posts->closeCursor();

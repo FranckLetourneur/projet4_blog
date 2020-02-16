@@ -12,7 +12,7 @@ function inputCheck2(event) {
     if (document.getElementById(loc).value.match(myRegEx)) {
         document.getElementById(loc).classList.add('border-danger');
         document.getElementById('submitButton').setAttribute("disabled", "disabled");
-
+       
         var aide = loc + 'Aide';
         document.getElementById(aide).classList.replace('hidden', 'show');
     }

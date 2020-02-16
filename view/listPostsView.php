@@ -6,7 +6,10 @@ echo "<div class='d-flex justify-content-around'>";
 
 while ($data = $posts->fetch())
     {
+        if ($data['blogPostStatus'] == 'inRead')
+        {
     ?>
+
     <div class="card" >
         <img src="public/image/alaska.jpg" class="card-img-top" alt="...">
         <div class="card-body">
@@ -17,8 +20,9 @@ while ($data = $posts->fetch())
     </div>
 
 
-<?php
-}
+    <?php
+        }
+    }
 $posts->closeCursor();
 echo "</div>";
 $content = ob_get_clean(); 

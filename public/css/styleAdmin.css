@@ -1,8 +1,13 @@
 h1, h2 {
     font-family: 'Merienda One', cursive;
-    color:white !important;
+    
 }
-
+h1 {
+    color: white !important;
+}
+h5 {
+    margin-top: 25px;
+}
 body {
     
     background: url("../image/alaskaAdmin.jpg") no-repeat center fixed;
@@ -65,9 +70,6 @@ section {
 }
 .row {
     margin: 25px 0 25px 0;
-        margin: 25px 0 25px 0;
-
-
 }
 .card {
     width: 25%;

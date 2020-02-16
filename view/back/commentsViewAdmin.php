@@ -5,7 +5,7 @@ $chap = 1;
 echo "<h2>Chap. ". $chap ."</h2>";
 while ($data = $comments->fetch())
     {
-        if ($data['commentBlogPostId'] != $chap)
+        if ($data['commentBlogPostId'] != $chap && $data['startingCommentId'] == 0)
         {
             echo "<h2>Chap. ". $data['commentBlogPostId'] ."</h2>";
             $chap++;

@@ -10,7 +10,18 @@ class controller
         
         if (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 0)
         {
-            require('view/back/adminHome.php');
+            if (isset($_GET['list']))
+            {
+                require('view/listPostsView.php');
+            }
+            else
+            {
+                $commentManager = new \fletour\model\CommentManagerAdmin();
+                $comments = $commentManager->getComments();
+
+                require('view/back/adminHome.php');  
+            }
+           
         }
         else
         {
