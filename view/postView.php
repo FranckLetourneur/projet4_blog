@@ -110,15 +110,15 @@ while ($data = $posts->fetch())
                         <form action="index.php?action=moderate&commentId=<?= $dataComment['commentId']; ?>&&id=<?= $data['blogPostId']; ?>" method="post" class="float-right">
                             <?php
                                 switch ($dataComment['commentReport']) {
-                                    case 1:
+                                    case 'reported':
                                     echo "<button class=\"btn-warning form-control CommentaireButton\">Attente modération</button>";
                                     break;
 
-                                    case 2:
+                                    case 'waiting':
                                         echo "<button class=\"btn btn-danger form-control CommentaireButton\">Signaler ce commentaire</button>";
                                         break;
                                                 
-                                    case 3:
+                                    case 'valid':
                                     echo "<button class=\"btn-success form-control CommentaireButton\">Commentaire Validé</button>";
                                     break;
                                             

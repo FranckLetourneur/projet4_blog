@@ -49,7 +49,7 @@ class CommentManager extends Manager
     {                
         $db = $this->dbConnect();
 
-        $req = $db->prepare("UPDATE comments SET commentReport = 1 WHERE commentId = ?");
+        $req = $db->prepare("UPDATE comments SET commentReport = 'reported' WHERE commentId = ?");
         $affectedLines =$req->execute(array($commentId));
 
         return $affectedLines;

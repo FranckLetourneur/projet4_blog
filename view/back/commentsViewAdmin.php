@@ -12,10 +12,10 @@ while ($data = $comments->fetch())
         }
 
         switch ($data['commentReport']) {
-            case 1:
+            case 'reported':
                 $fond = "bg-danger";
                 break;
-            case 2:
+            case 'waiting':
                 $fond = "bg-warning";
                 break;
             default:
@@ -27,8 +27,6 @@ while ($data = $comments->fetch())
         if ($data['startingCommentId'] == 0) 
         {
         ?>
-
-       
         <div class="d-flex flex-row mb-4 border border-secondary <?= $fond;?>">
             <div class="d-flex flex-column col-11 sansPadding ">
                 <div class="d-flex flex-row bg-secondary text-white">

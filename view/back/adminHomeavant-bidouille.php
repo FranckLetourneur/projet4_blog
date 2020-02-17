@@ -36,7 +36,7 @@ while ($data = $posts->fetch()) {
 <h5>Il y a de nouveaux commentaires signalés, souhaitez-vous les consulter ?</h5>
 <?php
 while ($dataComment = $comments->fetch()) {
-    if ($dataComment['commentReport'] == 1) {
+    if ($dataComment['commentReport'] == 'reported') {
 ?>
         <div class="d-flex flex-row mb-4 border border-danger">
             <div class="d-flex flex-column col-11 sansPadding ">

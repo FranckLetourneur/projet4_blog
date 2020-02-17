@@ -41,7 +41,7 @@ $result = $comments->fetchAll();
 $countDanger = 0;
 foreach ($result as $dataComment){
 
-    if ($dataComment['commentReport'] == 1  && $dataComment['startingCommentId'] == 0) {
+    if ($dataComment['commentReport'] == 'reported'  && $dataComment['startingCommentId'] == 0) {
         $countDanger++;
         if ($countDanger == 1) {echo"<h5>Il y a de nouveaux commentaires signalés :</h5>";}
 ?>
@@ -84,7 +84,7 @@ foreach ($result as $dataComment){
 $countWarning =0;
 foreach ($result as $dataComment){
 
-    if ($dataComment['commentReport'] == 2 && $dataComment['startingCommentId'] == 0) {
+    if ($dataComment['commentReport'] == 'waiting' && $dataComment['startingCommentId'] == 0) {
         $countWarning++;
         if ($countDanger == 1) {echo"<h5>Il y a de nouveaux commentaires que vous n'avez pas validé :</h5>";}
 ?>
