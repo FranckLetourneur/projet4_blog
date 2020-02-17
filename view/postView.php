@@ -5,16 +5,23 @@ ob_start();
 
 while ($data = $posts->fetch())
     {
-         
+        $arrayComments = $comments->fetchAll();
+        $countComment = count($arrayComments);
     ?>
-    <h2 class="titreChapitre text-info">Chapitre <?= $data['blogPostId']?> : <?= htmlspecialchars($data['blogPostTitle'])  ?></h2>
-            <p>
-                <?= $data['blogPostContents']  ?>
-            </p> 
-            <button class="btn btn-outline-info" data-toggle="modal" data-target="#modalCommentaire">laissez-un commentaire</button>
+    <h2 class="titreChapitre text-info ">Chapitre <?= $data['blogPostId']?> : <?= htmlspecialchars($data['blogPostTitle'])  ?></h2>
+    <p>
+        <?= $data['blogPostContents']  ?>
+    </p> 
+    <?php
+         if ($countComment == 0) {
+            echo "<div class='p-3 alert alert-info text-center'>Aucun commentaire pour ce chapitre. Soyez le premier à laisser votre avis !</div>";
+        }
+
+    ?>
+    <button class="btn btn-outline-info" data-toggle="modal" data-target="#modalCommentaire">laissez-un commentaire</button>
         
-            <!-- Modal commentaire -->
-            <div class="modal fade" id="modalCommentaire" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- Modal commentaire -->
+        <div class="modal fade" id="modalCommentaire" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -64,10 +71,9 @@ while ($data = $posts->fetch())
             </div>
             <!-- fin modal commentaire-->
     
-        <?php
-        $arrayComments = $comments->fetchAll();
-        $countComment = count($arrayComments);
-
+    
+    
+    <?php
         if (isset($_SESSION['all'])) 
         {
             $maxComment = $countComment + 1; 
