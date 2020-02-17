@@ -3,6 +3,10 @@ namespace fletour\controller;
 
 class controller 
 { 
+    public static function sendMail() {
+       //voir si j'implante la fonctionnalité ou si je renvois direct vers outlook
+    }
+
     public static function listPosts()
     {
         $postManager = new \fletour\model\PostManager(); // Création d'un objet

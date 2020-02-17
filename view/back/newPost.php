@@ -24,7 +24,7 @@ else
     <input name="blogPostTitle" value="<?= $blogPostTitle ?>">
     <input type="hidden" name="blogPostId" value="<?= $blogPostId ?>">
     <textarea name="textPost" id="myText">
-         
+      <?= $blogPostContents ?>
     </textarea>
     <button type="submit" id="submitButton" class="btn btn-info" name="bouton" value="quitter">Sauvegarder & quitter</button>
     <button type="submit" id="submitButton2" class="btn btn-info" name="bouton" value="continuer">Sauvegarder & continuer</button>

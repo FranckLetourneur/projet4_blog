@@ -7,10 +7,10 @@
     <div class="collapse navbar-collapse " id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item <?php if ($_GET['action'] === 'author)') {echo "active";}?>">
-                <a class="nav-link" href="#">L'auteur ? <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="author">A propos de moi <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">contact</a>
+                <a class="nav-link" href="index.php?action=contact">contact</a>
             </li>
             <?php
                 if (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 0)

@@ -9,7 +9,23 @@ require 'vendor/autoload.php';
 
 try {
     if (isset($_GET['action'])) {
-        if ($_GET['action'] == 'listPosts') {
+        if ($_GET['action'] === 'contact') {
+            require('view/contact.php');
+        }
+
+        elseif ($_GET['action'] === 'author') {
+            require('view/author.php');
+        }
+
+        elseif ($_GET['action'] === 'connexion') {
+            controller\Controller::connexion();
+        }
+
+        elseif ($_GET['action'] === 'sendMail') {
+            controller\Controller::sendMail();
+        }
+
+        elseif ($_GET['action'] === 'listPosts') {
             controller\Controller::listPosts();
         }
 
@@ -46,9 +62,7 @@ try {
         }
 
 
-        elseif ($_GET['action'] === 'connexion') {
-            controller\Controller::connexion();
-        }
+        
 
 
         elseif ($_GET['action'] === 'checkConnexion') {
