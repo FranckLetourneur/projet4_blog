@@ -65,8 +65,24 @@ while ($data = $posts->fetch())
             <!-- fin modal commentaire-->
     
         <?php
-        while ($dataComment = $comments->fetch())
+        $arrayComments = $comments->fetchAll();
+        $countComment = count($arrayComments);
+
+        if (isset($_SESSION['all'])) 
         {
+            $maxComment = $countComment + 1; 
+        }
+        else
+        {
+            $maxComment = 6;
+        }
+        $count = 1;
+        foreach ($arrayComments as $dataComment)
+        {
+            if ($count == $maxComment) 
+            {
+                break;
+            }
 
             if ($dataComment['startingCommentId'] == 0) 
             {   ?>
@@ -117,10 +133,15 @@ while ($data = $posts->fetch())
                </div>
                <?php
             }
-       ?>
-        
-        
-      <?php } 
+            $count++;
+        } 
+        if ($countComment > 5 && !isset($_SESSION['all'])) {
+            $_SESSION['all'] = true;
+            echo "<h5>Pour voir tous les commentaires, c'est <a class='text-dark' href='index.php?action=post&id=".$dataComment['commentBlogPostId']."'>ici</a></h5>";
+        }
+        else {
+            unset($_SESSION['all']);
+        }
        ?>
 
 <?php

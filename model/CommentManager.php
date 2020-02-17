@@ -14,7 +14,8 @@ class CommentManager extends Manager
             FROM comments c 
             INNER JOIN user u 
             ON c.commentsUserId = u.userId
-            WHERE commentBlogPostId = ? ORDER BY commentDate DESC');
+            WHERE commentBlogPostId = ? 
+            ORDER BY commentDate DESC');
         $comments->execute(array($postId));
         
         return $comments;
