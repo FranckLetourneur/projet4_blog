@@ -1,19 +1,23 @@
 <?php 
-//session_start();
 
 ob_start(); 
+$countComment = 0;
 
-while ($data = $posts->fetch())
+foreach($comments as $data)
     {
-        $arrayComments = $comments->fetchAll();
-        $countComment = count($arrayComments);
+        $countWithoutAnswer = $data['countWithoutAnswer'];
+    }
+foreach ($posts as $data)
+    {   
+        $countWithoutAnswer = count($comments);
+        
     ?>
     <h2 class="titreChapitre text-info ">Chapitre <?= $data['blogPostId']?> : <?= htmlspecialchars($data['blogPostTitle'])  ?></h2>
     <p>
         <?= $data['blogPostContents']  ?>
     </p> 
     <?php
-         if ($countComment == 0) {
+         if ($countWithoutAnswer == 0) {
             echo "<div class='p-3 alert alert-info text-center'>Aucun commentaire pour ce chapitre. Soyez le premier à laisser votre avis !</div>";
         }
 
@@ -76,14 +80,14 @@ while ($data = $posts->fetch())
     <?php
         if (isset($_SESSION['all'])) 
         {
-            $maxComment = $countComment + 1; 
+            $maxComment = $countWithoutAnswer + 1; 
         }
         else
         {
             $maxComment = 6;
         }
         $count = 1;
-        foreach ($arrayComments as $dataComment)
+        foreach ($comments as $dataComment)
         {
             if ($count == $maxComment) 
             {
@@ -131,8 +135,14 @@ while ($data = $posts->fetch())
                         <?php 
                             if ($dataComment['answerId'] !=0) 
                             {
-                                echo "réponse de Jean Forteroche : ";
-                                echo "<em>".$dataComment['answerContents']."</em>";
+                            ?>
+                                <div class="bg-white p-2 rounded">
+                                    <div class="text-secondary">Réponse de Jean Forteroche :</div>
+                                    <div class="text-info">
+                                        <?= $dataComment['answerContents'] ?>
+                                    </div>
+                                 </div>
+                            <?php
                             }
                         ?>
                     </div>
@@ -141,7 +151,7 @@ while ($data = $posts->fetch())
             }
             $count++;
         } 
-        if ($countComment > 5 && !isset($_SESSION['all'])) {
+        if ($countWithoutAnswer > 5 && !isset($_SESSION['all'])) {
             $_SESSION['all'] = true;
             echo "<h5>Pour voir tous les commentaires, c'est <a class='text-dark' href='index.php?action=post&id=".$dataComment['commentBlogPostId']."'>ici</a></h5>";
         }
@@ -152,7 +162,6 @@ while ($data = $posts->fetch())
 
 <?php
 }
-$posts->closeCursor();
 $content = ob_get_clean(); 
 require('template.php'); 
 

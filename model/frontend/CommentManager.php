@@ -1,26 +1,28 @@
 <?php
-namespace fletour\model;
+namespace fletour\model\frontend;
 
 class CommentManager extends Manager
 {
     public function getComments($postId)
     {
         $db = $this->dbConnect();
-    
-        $comments = $db->prepare('SELECT c.commentId, c.commentsUserId, c.commentAuthor, c.commentBlogPostId, c.commentContents, c.commentReport, 
+
+        $req = $db->prepare('SELECT c.commentId, c.commentsUserId, c.commentAuthor, c.commentBlogPostId, c.commentContents, c.commentReport, 
             DATE_FORMAT(c.commentDate, \'%d/%m/%Y à %Hh%imin%ss\') AS commentDate_fr, c.startingCommentId, u.userId, u.userPseudo, 
             (SELECT commentId FROM comments WHERE startingCommentId = c.commentId) AS answerId,
-            (SELECT commentContents FROM comments WHERE startingCommentId = c.commentId) AS answerContents
+            (SELECT commentContents FROM comments WHERE startingCommentId = c.commentId) AS answerContents,
+            (SELECT COUNT(*) FROM comments WHERE startingCommentId = 0) as countWithoutAnswer 
             FROM comments c 
             INNER JOIN user u 
             ON c.commentsUserId = u.userId
-            WHERE commentBlogPostId = ? 
+            WHERE commentBlogPostId = ? AND startingCommentId = 0
             ORDER BY commentDate DESC');
-        $comments->execute(array($postId));
+        $req->execute(array($postId));
         
+        $comments = $req->fetchAll();
+
         return $comments;
     }
-
 
     public function addComment($userId, $commentAuthor, $postId, $comment, $startingCommentId )
     {   
@@ -36,14 +38,9 @@ class CommentManager extends Manager
             $commentAuthor="";
             $affectedLines = $comments->execute(array($userId, $commentAuthor, $postId,  $comment, $startingCommentId ));
         }
-        
 
         return $affectedLines;
     }
-
-    
-
-    
 
     public function updateCommentReport($commentId)
     {                

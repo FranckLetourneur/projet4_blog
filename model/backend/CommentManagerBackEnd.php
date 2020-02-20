@@ -1,13 +1,13 @@
 <?php
-namespace fletour\model;
+namespace fletour\model\backend;
 
-class CommentManagerAdmin extends Manager
+class CommentManagerBackEnd extends \fletour\model\frontend\Manager
 {
     public function getComments()
     {
         $db = $this->dbConnect();
         
-        $comments = $db->query('SELECT c.commentId, c.commentsUserId, c.commentAuthor, c.commentBlogPostId, c.commentContents, c.commentReport, 
+        $req = $db->query('SELECT c.commentId, c.commentsUserId, c.commentAuthor, c.commentBlogPostId, c.commentContents, c.commentReport, 
             DATE_FORMAT(c.commentDate, \'%d/%m/%Y à %Hh%imin%ss\') AS commentDate_fr, c.startingCommentId, u.userId, u.userPseudo, 
             (SELECT commentId FROM comments WHERE startingCommentId = c.commentId) AS answerId,
             (SELECT commentContents FROM comments WHERE startingCommentId = c.commentId) AS answerContents
@@ -16,9 +16,20 @@ class CommentManagerAdmin extends Manager
             ON c.commentsUserId = u.userId
             ORDER BY commentBlogPostId, commentReport, commentDate DESC ');
 
+        $comments = $req->fetchAll();
         return $comments;
     }
-    
+
+    public function updatecommentReport($id)
+    {                
+        $db = $this->dbConnect();
+
+        $req = $db->prepare("UPDATE comments SET commentReport = 'valid' WHERE commentId = ?");
+        $affectedLines =$req->execute(array($id));
+
+        return $affectedLines;
+    }
+
     public function getOneComment($id)
     {
         $db = $this->dbConnect();
@@ -33,16 +44,6 @@ class CommentManagerAdmin extends Manager
         return $oneComment;
     }
 
-    public function updatecommentReport($id)
-    {                
-        $db = $this->dbConnect();
-
-        $req = $db->prepare("UPDATE comments SET commentReport = 'valid' WHERE commentId = ?");
-        $affectedLines =$req->execute(array($id));
-
-        return $affectedLines;
-    }
-
     public function commentUpdateBdd($id, $content)
     {
         $db = $this->dbConnect();
@@ -55,12 +56,11 @@ class CommentManagerAdmin extends Manager
 
     public function commentDelete($id)
     {
-        $text = "Le contenu de ce commentaire a été supprimé par Jean Forteroche";
         $db = $this->dbConnect();
-        $req = $db->prepare("UPDATE comments SET commentContents = ? WHERE commentId = ?");
-        $affectedLines =$req->execute(array($text, $id));
-
+        $req = $db->prepare('DELETE FROM comments WHERE commentId = ?');
+        $affectedLines = $req->execute(array($id));
         return $affectedLines;
   
     }
+
 }

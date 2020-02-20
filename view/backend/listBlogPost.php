@@ -5,7 +5,7 @@ ob_start();
 <h2>Voici tous les Chapitres créés</h2>
 
 <?php
-while ($data = $posts->fetch())
+foreach($posts as $data)
 {
     if ($data['blogPostStatus'] != 'inTrash') {
         if ($data['blogPostStatus'] == 'inRead') {
@@ -28,7 +28,7 @@ while ($data = $posts->fetch())
                     <img src="public/image/tricolor<?= $tricolore ?>.png" alt="Feux tricolores indiquant le status de l'article" >
                 </a>
                 
-                <a href="index.php?action=deletePost&id=<?= $data['blogPostId'] ?>" class="text-dark" title="Pour supprimer ce chapitre"><i class="p-2 fas fa-trash-alt fa-lg"></i></a>
+                <a href="index.php?action=deletePost&id=<?= $data['blogPostId'] ?>" onclick=" return confirm('Etes-vous sûr de vouloir supprimer ce commentaire ? ');"  class="text-dark" title="Pour supprimer ce chapitre"><i class="p-2 fas fa-trash-alt fa-lg"></i></a>
                 
             </div> 
             
@@ -38,7 +38,7 @@ while ($data = $posts->fetch())
 }
 echo "<p>ici pour voir ceux mis à la poubelle</p>";
 $content = ob_get_clean(); 
-require('view/template.php'); 
+require('view/frontend/template.php'); 
 
 ?>
 

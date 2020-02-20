@@ -5,12 +5,12 @@ ob_start();
     {
         ?>
 
-        <form action="index.php?action=addComment" method="POST">
+        <form action="addComment" method="POST">
             <h5> Voici le message auquel vous souhaitez répondre</h5>
             <p><?= $comments['commentContents'] ?></p>
             <input type="hidden" name="startingCommentId" value="<?= $comments['commentId'] ?>">
             <input type="hidden" name="userId" value="<?= $_SESSION['userId'] ?>">
-            <input type="hidden" name="commentAuthor" value="toto"> 
+            <input type="hidden" name="commentAuthor" value="@&"> 
             <input type="hidden" name="commentBlogPostId" value="<?= $comments['commentBlogPostId'] ?>"> 
        
 
@@ -32,7 +32,7 @@ ob_start();
 
 $content = ob_get_clean(); 
 
-require('view/template.php'); 
+require('view/frontend/template.php'); 
 
 ?>
 

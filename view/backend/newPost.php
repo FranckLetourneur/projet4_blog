@@ -3,24 +3,23 @@
 ob_start(); 
 if (isset($post))
 {
-  while ($data = $post->fetch())
+  foreach($post as $data)
     {
       $blogPostContents = $data['blogPostContents'];
       $blogPostTitle = $data['blogPostTitle'];
       $blogPostId = $data['blogPostId'];
     }
-  $post->closeCursor();
 }
 else
 {
   $blogPostContents = '';
-  $blogPostTitle = 'indiquer un titre';
+  $blogPostTitle = '';
   $blogPostId = 0;
 }
 
 
 ?>
-<form action="index.php?action=saveNewPost" method="post">
+<form action="saveNewPost" method="post">
     <input name="blogPostTitle" value="<?= $blogPostTitle ?>">
     <input type="hidden" name="blogPostId" value="<?= $blogPostId ?>">
     <textarea name="textPost" id="myText">
@@ -30,6 +29,7 @@ else
     <button type="submit" id="submitButton2" class="btn btn-info" name="bouton" value="continuer">Sauvegarder & continuer</button>
 
 </form>
+
 <script type="text/javascript">
   tinymce.init({
     selector: '#myText',
@@ -57,5 +57,5 @@ else
  
 
 $content = ob_get_clean(); 
-require('view/template.php'); 
+require('view/frontend/template.php'); 
 

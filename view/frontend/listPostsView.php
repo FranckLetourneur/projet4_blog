@@ -1,10 +1,9 @@
 <?php 
-//session_start();
 
 ob_start(); 
 echo "<div class='d-flex justify-content-around'>";
 
-while ($data = $posts->fetch())
+foreach ($posts as $data)
     {
         if ($data['blogPostStatus'] == 'inRead')
         {
@@ -23,12 +22,13 @@ while ($data = $posts->fetch())
     <?php
         }
     }
-$posts->closeCursor();
 echo "</div>";
+
+
 $content = ob_get_clean(); 
 require('template.php'); 
 
-?>
+
 
 
 

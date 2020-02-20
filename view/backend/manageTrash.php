@@ -6,9 +6,7 @@ ob_start();
 <h3 class="alert alert-danger">Attention, une suppression à cet endroit est définitive. Pas de retour en arrière possible</h3>
 <?php
 if (isset($posts)) {
-
-
-    while ($data = $posts->fetch())
+    foreach($posts as $data)
     {
         if ($data['blogPostStatus'] == 'inTrash') {
                 
@@ -32,7 +30,7 @@ if (isset($posts)) {
 }
 echo "<h5>Si vous venez de supprimer définitivement des articles, je vous conseille de gérer la numérotation: <a href='index.php?action=numberBlogPost'>ici</a></h5>";
 $content = ob_get_clean(); 
-require('view/template.php'); 
+require('view/frontend/template.php'); 
 
 ?>
 

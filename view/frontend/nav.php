@@ -10,7 +10,7 @@
                 <a class="nav-link" href="author">A propos de moi <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php?action=contact">contact</a>
+                <a class="nav-link" href="contact">contact</a>
             </li>
             <?php
                 if (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 0)
@@ -21,12 +21,12 @@
                         Menu auteur
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="index.php?action=newPost">Ecrire un nouveau chapitre</a>
-                        <a class="dropdown-item" href="index.php?action=listBlogPost">Lister tous les chapitres</a>
-                        <a class="dropdown-item" href="index.php?action=numberBlogPost"> Numéroter les chapitres</a>
-                        <a class="dropdown-item" href="index.php?action=manageTrash">Gérer la corbeille</a>
+                        <a class="dropdown-item" href="newPost">Ecrire un nouveau chapitre</a>
+                        <a class="dropdown-item" href="listBlogPost">Lister tous les chapitres</a>
+                        <a class="dropdown-item" href="numberBlogPost"> Numéroter les chapitres</a>
+                        <a class="dropdown-item" href="manageTrash">Gérer la corbeille</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="index.php?action=commentsAdmin">Gérer les commentaires</a>
+                        <a class="dropdown-item" href="commentsAdmin">Gérer les commentaires</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -44,7 +44,7 @@
                {
                     echo '
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?action=deconnexion">déconnexion</a>
+                        <a class="nav-link" href="deconnexion">déconnexion</a>
                     </li>
                     ';
                }
@@ -52,7 +52,7 @@
                {
                     echo '
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?action=connexion">connexion</a>
+                        <a class="nav-link" href="connexion">connexion</a>
                     </li>
                    ';
                }

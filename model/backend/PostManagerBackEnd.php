@@ -1,7 +1,7 @@
 <?php
-namespace fletour\model;
+namespace fletour\model\backend;
 
-class PostManagerAdmin extends Manager
+class PostManagerBackEnd extends \fletour\model\frontend\Manager
 {
     public function saveNewPost($blogPostId, $blogPostTitle, $textPost)
     {
@@ -38,16 +38,24 @@ class PostManagerAdmin extends Manager
 
         return $affectedLines;
     }
-    
+
     public function modifyPostStatus($id) {
         $db = $this->dbConnect();
-
-        $post = $db->prepare('UPDATE blog_post SET blogPostStatus = ? WHERE blogPostId = ?');
+        $req = $db->query("SELECT blogPostStatus FROM blog_post WHERE blogPostId = $id");
+        $status = $req->fetch();
+        if ($status['blogPostStatus'] === 'inProgress')
+        {
+            $post = $db->query("UPDATE blog_post SET blogPostStatus = 'inRead' WHERE blogPostId = $id");
+        }
+        elseif ($status['blogPostStatus'] === 'inRead')
+        {
+            $post = $db->query("UPDATE blog_post SET blogPostStatus = 'inProgress' WHERE blogPostId = $id");
+        }
+    
         $affectedLines = $post->execute(array('inRead',$id));
 
         return $affectedLines;
     }
-
 
     public function lastPost() {
         $db = $this->dbConnect();

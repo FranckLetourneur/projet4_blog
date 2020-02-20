@@ -2,43 +2,39 @@
 namespace fletour;
 session_start();
 
-require 'vendor/autoload.php'; 
+require ('vendor/autoload.php');
 \fletour\Autoloader::register(); 
-
-//require('controller/controller.php');
 
 try {
     if (isset($_GET['action'])) {
         if ($_GET['action'] === 'contact') {
-            require('view/contact.php');
+            require('view/frontend/contact.php');
         }
 
         elseif ($_GET['action'] === 'author') {
-            require('view/author.php');
+            require('view/frontend/author.php');
         }
 
         elseif ($_GET['action'] === 'connexion') {
-            controller\Controller::connexion();
+            require('view/frontend/connexionView.php');
         }
 
-        elseif ($_GET['action'] === 'sendMail') {
-            controller\Controller::sendMail();
+        elseif ($_GET['action'] === 'deconnexion') {
+            controller\FrontEnd::deconnexion();
         }
-
-        elseif ($_GET['action'] === 'listPosts') {
-            controller\Controller::listPosts();
+        
+        elseif ($_GET['action'] === 'listPosts') {//
+            controller\FrontEnd::listPosts();
         }
-
 
         elseif ($_GET['action'] == 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                controller\Controller::post();
+                controller\FrontEnd::post();
             }
             else {
                 throw new \Exception('Aucun identifiant de billet envoyé');
             }
         }
-
 
         elseif ($_GET['action'] == 'addComment') {
             if (!isset($_POST['startingCommentId'])) 
@@ -49,125 +45,106 @@ try {
             {
                 $startingCommentId = $_POST['startingCommentId'];
             }
-            controller\Controller::addComment($_POST['userId'], $_POST['commentAuthor'], $_POST['commentBlogPostId'], $_POST['commentContents'], $startingCommentId);
-        }
 
+            controller\FrontEnd::addComment($_POST['userId'], $_POST['commentAuthor'], $_POST['commentBlogPostId'], $_POST['commentContents'], $startingCommentId);
+        }
 
         elseif ($_GET['action'] == 'moderate')
         {
             if (isset($_GET['commentId']) && $_GET['commentId'] > 0) 
             {
-                controller\Controller::moderate($_GET['commentId']);
+                controller\FrontEnd::moderate($_GET['commentId']);
             }
         }
 
-
-        
-
-
         elseif ($_GET['action'] === 'checkConnexion') {
-            controller\Controller::checkConnexion();
+            controller\FrontEnd::checkConnexion();
         }
 
         elseif ($_GET['action'] === 'userRegistration') {
-            controller\Controller::userRegistration();
+            controller\FrontEnd::userRegistration();
         }
 
         elseif ($_GET['action'] === 'userCreate') {
-            controller\Controller::userCreate();
+            controller\FrontEnd::userCreate();
         }
 
         
-        elseif ($_GET['action'] === 'deconnexion') {
-            controller\Controller::deconnexion();
-        }
-
         elseif (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 0) {
-            if ($_GET['action'] === 'commentsAdmin') {
-                controller\ControllerBack::commentsAdmin();
+            if ($_GET['action'] === 'newPost') {
+                require('view/backend/newPost.php');
             }
-
-            elseif ($_GET['action'] === 'commentsValidation' && isset($_GET['id'])) {
-                controller\ControllerBack::commentsValidate($_GET['id']);
-            }
-
-            elseif ($_GET['action'] === 'commentsModify' && isset($_GET['id'])) {
-                controller\ControllerBack::commentsModify($_GET['id']);
-            }
-
-            elseif ($_GET['action'] === 'commentsUpdate') {
-                controller\ControllerBack::commentUpdate($_POST['commentId'], $_POST['commentContents']);
-            }
-
-            elseif ($_GET['action'] === 'commentsDelete') {
-                controller\ControllerBack::commentsDelete($_GET['id']);
-            }
-
-            elseif ($_GET['action'] === 'newPost') {
-                require('view/back/newPost.php');
-            }
-
             elseif ($_GET['action'] === 'saveNewPost'){
-                controller\ControllerBack::saveNewPost($_POST['blogPostId'],$_POST['blogPostTitle'],$_POST['textPost']);
+                controller\BackEnd::saveNewPost($_POST['blogPostId'],$_POST['blogPostTitle'],$_POST['textPost']);
             }
-
             elseif  ($_GET['action'] === 'modifyPost' && isset($_GET['id']) && $_GET['id'] != 0){
-                controller\ControllerBack::modifyPost($_GET['id']);
+                controller\BackEnd::modifyPost($_GET['id']);
             }
-
             elseif ($_GET['action'] === 'deletePost' && isset($_GET['id']) && $_GET['id'] != 0) {
-                controller\ControllerBack::deletePost($_GET['id']);
+                controller\BackEnd::deletePost($_GET['id']);
             }
-
             elseif ($_GET['action'] === 'unDeletePost' && isset($_GET['id']) && $_GET['id'] != 0) {
-                controller\ControllerBack::unDeletePost($_GET['id']);
+                controller\BackEnd::unDeletePost($_GET['id']);
             }
-
             elseif ($_GET['action'] === 'modifyPostStatus' && isset ($_GET['id']) && $_GET['id'] != 0) {
-                controller\ControllerBack::modifyPostStatus($_GET['id']);
+                controller\BackEnd::modifyPostStatus($_GET['id']);
+            }
+            elseif ($_GET['action'] === 'updateBlogPostId') {
+                controller\BackEnd::updateBlogPostId($_POST['blogPostId'], $_POST['newBlogPostId']);
+            }
+            elseif ($_GET['action'] === 'updateIncrementingBlogPost') {
+                controller\BackEnd::updateIncrementingBlogPost();
+            }
+            elseif ($_GET['action'] === 'erasePost' && isset($_GET['id'])) {
+                controller\BackEnd::erasePost($_GET['id']);
             }
 
             elseif ($_GET['action'] === 'listBlogPost') {
-                controller\ControllerBack::listBlogPost();
+                controller\BackEnd::listBlogPost();
+            }
+            elseif ($_GET['action'] === 'commentsValidation' && isset($_GET['id'])) {
+                controller\BackEnd::commentsValidate($_GET['id']);
+            }
+            elseif ($_GET['action'] === 'commentsModify' && isset($_GET['id'])) {
+                controller\BackEnd::commentsModify($_GET['id']);
+            }
+            elseif ($_GET['action'] === 'commentsUpdate') {
+                controller\BackEnd::commentUpdate($_POST['commentId'], $_POST['commentContents']);
+            }
+            elseif ($_GET['action'] === 'commentsDelete') {
+                controller\BackEnd::commentsDelete($_GET['id']);
             }
 
-            elseif ($_GET['action'] === 'manageTrash') {
-                controller\ControllerBack::manageTrash();
-            }
+
+
+
 
             elseif ($_GET['action'] === 'numberBlogPost') {
-                controller\ControllerBack::numberBlogPost();
+                controller\BackEnd::numberBlogPost();
             }
-
-            elseif ($_GET['action'] === 'updateBlogPostId') {
-                controller\ControllerBack::updateBlogPostId($_POST['blogPostId'], $_POST['newBlogPostId']);
+            elseif ($_GET['action'] === 'manageTrash') {
+                controller\BackEnd::manageTrash();
             }
-
-            elseif ($_GET['action'] === 'updateIncrementingBlogPost') {
-                controller\ControllerBack::updateIncrementingBlogPost();
+            elseif ($_GET['action'] === 'commentsAdmin') {
+                controller\BackEnd::commentsAdmin();
             }
-
-            elseif ($_GET['action'] === 'erasePost' && isset($_GET['id'])) {
-                controller\ControllerBack::erasePost($_GET['id']);
-            }
-
-
             else {
                 throw new \Exception("Soit je ne connais pass cette page, soit vous n'avez pas le droit d'y accéder. Désolé");
             }
-        }
         
-        else {
-            throw new \Exception("erreur 404");
         }
-    } 
-    else {
-        controller\Controller::listPosts();
+    
+        else {
+            throw new \Exception("erreur 404");    
+        }    
     }
+    else {
+        controller\FrontEnd::listPosts();
+    }
+
 }
-
-
 catch(\Exception $e) { 
     $errorMessage = $e->getMessage();
-    require('view/errorView.php');
+    require('view/frontend/errorView.php');
+
 }

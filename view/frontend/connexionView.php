@@ -17,7 +17,7 @@ ob_start();
                     <small id="mdpAide" class="form-text text-muted alert alert-danger hidden">Merci de ne pas utiliser de balise</small>
                </div>                          
                 <button type="submit" id="submitButton"class="btn btn-info" disabled>Submit</button>
-                <p>Inscrivez-vous si vous le souhaitez : <a href="http://localhost:8888/blog_Jean_Forteroche/index.php?action=userRegistration">ici</a></p>
+                <p>Inscrivez-vous si vous le souhaitez : <a href="userRegistration">ici</a></p>
             </form>
         </div>
     </div>

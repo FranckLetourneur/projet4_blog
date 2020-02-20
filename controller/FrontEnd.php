@@ -1,72 +1,75 @@
 <?php
 namespace fletour\controller;
 
-class controller 
-{ 
-    public static function sendMail() {
-       //voir si j'implante la fonctionnalité ou si je renvois direct vers outlook
-    }
+class FrontEnd {
 
     public static function listPosts()
     {
-        $postManager = new \fletour\model\PostManager(); // Création d'un objet
-        $posts = $postManager->getPosts(); // Appel d'une fonction de cet objet
-        
+        $postManager = new \fletour\model\frontend\PostManager(); 
+        $posts = $postManager->getPosts(); 
         if (isset($_SESSION['userRole']) && $_SESSION['userRole'] == 0)
         {
             if (isset($_GET['list']))
             {
-                require('view/listPostsView.php');
+                require('view/frontend/listPostsView.php');
             }
             else
             {
-                $commentManager = new \fletour\model\CommentManagerAdmin();
+                $commentManager = new \fletour\model\backend\CommentManagerBackEnd();
                 $comments = $commentManager->getComments();
 
-                require('view/back/adminHome.php');  
+                require('view/backend/adminHome.php');  
             }
            
         }
         else
         {
-            require('view/listPostsView.php');
+           require('view/frontend/listPostsView.php');
         }
        
     }
 
+    public static function deconnexion()
+    {   
+        $_SESSION = array();
+        session_destroy();
+        header('Location: index.php');
+
+    }
+
     public static function post()
     {
-        $postManager = new \fletour\model\PostManager();
-        $commentManager = new \fletour\model\CommentManager();
-
+        $postManager = new \fletour\model\frontend\PostManager();
         $posts = $postManager->getPost($_GET['id']);
-        $comments = $commentManager->getComments($_GET['id']);
 
-        require('view/postView.php');
+        $commentManager = new \fletour\model\frontend\CommentManager();
+        $comments = $commentManager->getComments($_GET['id']);
+        require('view/frontend/postView.php');
     }
 
     public static function addComment($idUser, $commentAuthor, $postId, $comment, $startingCommentId)
-    {
+    {   
         $idUser = htmlspecialchars(strip_tags($idUser));
         $commentAuthor = htmlspecialchars(strip_tags($commentAuthor));
         $postId = htmlspecialchars(strip_tags($postId));
         $comment = htmlspecialchars(strip_tags($comment));
         $startingCommentId = htmlspecialchars(strip_tags($startingCommentId));  
 
-        $connexionManager = new \fletour\model\ConnexionManager();
+        $connexionManager = new \fletour\model\frontend\ConnexionManager();
         $userInformation = $connexionManager->checkConnexion($commentAuthor);
-
+       
         if (isset($userInformation['userPseudo']))
         {
-            throw new \Exception( ' Vous avez essayé de poster un commentaire sous un nom enregistré. S\'il s\'agit du votre, <a href="http://localhost:8888/blog_Jean_Forteroche/index.php?action=connexion">connectez-vous </a>, merci !');
+            throw new \Exception( ' Vous avez essayé de poster un commentaire sous un nom enregistré. S\'il s\'agit du votre, <a href="connexion">connectez-vous </a>, merci !');
 
         }
 
-        $commentManager = new \fletour\model\CommentManager();
+        $commentManager = new \fletour\model\frontend\CommentManager();
         $comments = $commentManager->addComment($idUser, $commentAuthor, $postId, $comment, $startingCommentId);
+
         if ($startingCommentId != 0 && $_SESSION['userRole'] == 0)
         {
-            header('Location: index.php?action=commentsAdmin');
+            header('Location: commentsAdmin');
         }
         else
         {
@@ -76,23 +79,18 @@ class controller
         
     }
 
-   
     public static function moderate()
     {
         $commentId = htmlspecialchars($_GET['commentId']);
-        $commentManager = new \fletour\model\CommentManager();
+        $commentManager = new \fletour\model\frontend\CommentManager();
         $comments = $commentManager->updatecommentReport($commentId);
         
         header('Location: index.php?action=post&id='.$_GET['id'].'');
     }
 
-    public static function connexion()
-    {
-        require('view/connexionView.php');
-    }
-
     public static function checkConnexion()
-    {   if (isset($_POST['userName']) && isset($_POST['userMdp']) )
+    {   
+        if (isset($_POST['userName']) && isset($_POST['userMdp']) )
         {
             if ($_POST['userName'] === htmlspecialchars(strip_tags($_POST['userName'])))
             {
@@ -113,7 +111,7 @@ class controller
                 $userMdp = "";
             }
             
-            $connexionManager = new \fletour\model\ConnexionManager();
+            $connexionManager = new \fletour\model\frontend\ConnexionManager();
             $userInformation = $connexionManager->checkConnexion($userName);
 
             $isPasswordCorrect = password_verify($userMdp, $userInformation['userPassword']);
@@ -130,32 +128,27 @@ class controller
                     }
                     else 
                     {
-                        throw new \Exception( 'Mauvais MdP !');
+                        throw new \Exception( 'Soit le nom, soit le mot de passe est faux!');
                     }
                 
             }
             else
             {
                     //user unkwon
-                    header('Location: index.php?action=userRegistration');
+                    header('Location: userRegistration');
             }
             
-        }
-
-       
-        
+        }        
         else
         {
             throw new \Exception('formulaire mal rempli');
         }
-        
+
     }
 
-    
     public static function userRegistration()
     {
-       
-        require('view/userRegistrationView.php');
+       require('view/frontend/userRegistrationView.php');
     }
 
     public static function userCreate()
@@ -175,7 +168,6 @@ class controller
             {
                 $userMdp = htmlspecialchars(strip_tags($_POST['userMdp']));
                 $userMdp_hash = password_hash($userMdp, PASSWORD_DEFAULT);
-               
             }
             else
             {
@@ -193,7 +185,7 @@ class controller
 
             if (!empty($_POST['userName']) && !empty($_POST['userMdp']) && !empty($_POST['userMail']))
             {
-                $connexionManager = new \fletour\model\ConnexionManager();
+                $connexionManager = new \fletour\model\frontend\ConnexionManager();
                 $userInformation = $connexionManager->checkConnexion($userName);
                 
                 if (isset($userInformation['userPseudo']))
@@ -213,13 +205,5 @@ class controller
             }
             
         }
-    }
-
-    public static function deconnexion()
-    {   //session_start();
-        $_SESSION = array();
-        session_destroy();
-        header('Location: index.php');
-
     }
 }

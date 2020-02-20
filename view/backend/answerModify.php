@@ -5,7 +5,7 @@ ob_start();
     {
         ?>
 
-        <form action="index.php?action=commentsUpdate" method="POST">
+        <form action="commentsUpdate" method="POST">
             <h5> Voici le message auquel vous souhaitez répondre</h5>
             <p><?= $comments['commentContents'] ?></p>
             <input type="hidden" name="commentId" value="<?= $comments['answerId'] ?>">
@@ -29,7 +29,7 @@ ob_start();
 
 $content = ob_get_clean(); 
 
-require('view/template.php'); 
+require('view/frontend/template.php'); 
 
 ?>
 
