@@ -1,9 +1,9 @@
 <?php
-namespace fletour\model\frontend;
+namespace fletour\vendor;
 
-class Manager
+class DBFactory
 {
-    protected function dbConnect()
+    public static function getMysqlConnexionWithPDO()
     {
         try
         {
@@ -17,5 +17,5 @@ class Manager
             die('Erreur : '.$e->getMessage());
         }
     }
-}
 
+}

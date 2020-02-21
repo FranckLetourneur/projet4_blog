@@ -1,29 +1,34 @@
 <?php
 namespace fletour\model\frontend;
 
-class PostManager extends Manager
-{
-    public function getPosts()
-    {
-        $db = $this->dbConnect();
+class PostManager {
+    
+    protected $db;
 
-        $req = $db->query('SELECT blogPostId, blogPostTitle, blogPostContents, DATE_FORMAT(blogPostUpdateDate, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr , blogPostStatus 
-        FROM blog_post ORDER BY blogPostUpdateDate DESC');
-        
-        $posts = $req->fetchAll();
-        return $posts;
+    public function __construct(\PDO $db) {
+        $this->db = $db;
     }
 
-    public function getPost($postId)
+    public function getCount()
     {
-        $db = $this->dbConnect();
-
-        $req = $db->prepare('SELECT blogPostId, blogPostTitle, blogPostContents, DATE_FORMAT(blogPostUpdateDate, \'%d/%m/%Y à %Hh%i\') AS creation_date_fr 
-        FROM blog_post WHERE blogPostId = ?');
-        $req->execute(array($postId));
         
-    $posts = $req->fetchAll();
-        return $posts;
+        $req = $this->db->query("SELECT COUNT(blogPostId) AS numberOfBlogPost 
+                            FROM blog_post WHERE blogPostStatus = 'inRead' " );
+        $count = $req->fetch();
+        
+        $numberOfBlogPost = $count['numberOfBlogPost'];
+        return $numberOfBlogPost;
     }
 
+    public function getPosts($index, $interval)
+    {   
+       // $lien = '\fletour\model\BlogPost()';
+        $req = $this->db->query("SELECT blogPostId, blogPostTitle, blogPostContents, blogPostStatus 
+        FROM blog_post ORDER BY blogPostUpdateDate DESC LIMIT $index, $interval");
+        
+      //  $req->setFetchMode(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, BlogPost::BlogPost);
+      //  $req->setFetchMode(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, "$lien");
+        $posts = $req->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE,'\fletour\model\frontend\BlogPost');
+        return $posts;
+    }
 }

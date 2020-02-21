@@ -27,6 +27,8 @@
                         <a class="dropdown-item" href="manageTrash">Gérer la corbeille</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="commentsAdmin">Gérer les commentaires</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="userAdmin">Gérer les lecteurs</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
