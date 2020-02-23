@@ -1246,10 +1246,10 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 	// QSA and matchesSelector support
 
-	// matchesSelector(:active) reports false when true (IE9/Opera 11.5)
+	// matchesSelector(:active) commentReports false when true (IE9/Opera 11.5)
 	rbuggyMatches = [];
 
-	// qSa(:focus) reports false when true (Chrome 21)
+	// qSa(:focus) commentReports false when true (Chrome 21)
 	// We allow this because of a bug in IE8/9 that throws an error
 	// whenever `document.activeElement` is accessed on an iframe
 	// So, we allow :focus to pass through QSA all the time to avoid the IE error
@@ -4575,7 +4575,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		// Halve the iteration target value to prevent interference from CSS upper bounds (gh-2144)
 		initial = initial / 2;
 
-		// Trust units reported by jQuery.css
+		// Trust units commentReported by jQuery.css
 		unit = unit || initialInUnit[ 3 ];
 
 		// Iteratively approximate from a nonzero starting point
@@ -6273,7 +6273,7 @@ var rboxStyle = new RegExp( cssExpand.join( "|" ), "i" );
 		pixelBoxStylesVal = roundPixelMeasures( divStyle.right ) === 36;
 
 		// Support: IE 9 - 11 only
-		// Detect misreporting of content dimensions for box-sizing:border-box elements
+		// Detect miscommentReporting of content dimensions for box-sizing:border-box elements
 		boxSizingReliableVal = roundPixelMeasures( divStyle.width ) === 36;
 
 		// Support: IE 9 only
@@ -6562,7 +6562,7 @@ function getWidthOrHeight( elem, dimension, extra ) {
 	// Fall back to offsetWidth/offsetHeight when value is "auto"
 	// This happens for inline elements with no explicit setting (gh-3571)
 	// Support: Android <=4.1 - 4.3 only
-	// Also use offsetWidth/offsetHeight for misreported inline dimensions (gh-3602)
+	// Also use offsetWidth/offsetHeight for miscommentReported inline dimensions (gh-3602)
 	// Support: IE 9-11 only
 	// Also use offsetWidth/offsetHeight for when box sizing is unreliable
 	// We use getClientRects() to check for hidden/disconnected.
@@ -7328,7 +7328,7 @@ function Animation( elem, properties, options ) {
 				deferred.notifyWith( elem, [ animation, 1, 0 ] );
 			}
 
-			// Resolve the animation and report its conclusion
+			// Resolve the animation and commentReport its conclusion
 			deferred.resolveWith( elem, [ animation ] );
 			return false;
 		},
