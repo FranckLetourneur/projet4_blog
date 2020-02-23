@@ -31,7 +31,15 @@ for ($i=1; $i <= $numberOfPages ; $i++) {
     }
     else
     {
-        echo '<a href="index.php?action=listPosts&page='.$i.'" class="btn btn-info m-2"> '.$i. '</a>';
+        if (isset($_SESSION['userRole']) && $_SESSION["userRole"] == 0) {
+            $chaine= "index.php?action=listPosts&page=$i&list=list";
+            echo "<a href='".$chaine."' class='btn btn-info m-2'>".$i."</a>";
+        }
+        else
+        {
+            echo '<a href="index.php?action=listPosts&page='.$i.'" class="btn btn-info m-2"> '.$i. '</a>';
+
+        }
     }
 }
 echo "</div>";
