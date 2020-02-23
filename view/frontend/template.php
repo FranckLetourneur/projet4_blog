@@ -31,7 +31,7 @@
 
         </section>
         <footer>
-            <p>Site créé dans le cadre d'une formation Developpeur Web Junior chez OpenClassRoom</p>
+            <p class='footer'>Site créé dans le cadre d'une formation Developpeur Web Junior chez OpenClassRoom • <a href="confidential">Politique de confidentialité</a></p>
         </footer>
     </div>
 

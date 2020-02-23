@@ -5,10 +5,10 @@ class BlogPost {
     private $blogPostId;
     private $blogPostTitle;
     private $blogPostContents;
-    private $blogPostUpdateDate;
+    private $creationDateFr;
     private $blogPostStatus;
 
-  /*  public function __construct(array $data)
+ /*  public function __construct(array $data)
     {  
         $this->hydrate($data);        
 
@@ -39,9 +39,9 @@ class BlogPost {
     {
         if (is_string($contents)) { $this->blogPostContents = $contents;}
     }
-    public function setBlogPostUpdateDate($date)
+    public function setCreationDateFr($date)
     {
-        $this->blogPostUpdateDate = $date;
+        $this->creationDateFr = $date;
     }
     public function setBlogPostStatus($status)
     {
@@ -61,15 +61,13 @@ class BlogPost {
     {
         return $this->blogPostContents;
     }
-    public function getBlogPostUpdateDate()
+    public function getCreationDateFr()
     {
-        return $this->blogPostUpdateDate;
+        return $this->creationDateFr;
     }
     public function getBlogPostStatus()
     {
         return $this->blogPostStatus;
     }
-    public static function toto(){
-        echo "ici aussi";exit();
-    }
+    
 }

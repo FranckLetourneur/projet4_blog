@@ -1,7 +1,7 @@
 <?php 
 
 ob_start(); 
-echo "<div class='d-flex justify-content-around'>";
+echo "<div class='d-flex justify-content-around  flex-wrap'>";
 foreach ($posts as $data)
     {
         

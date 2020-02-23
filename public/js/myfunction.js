@@ -48,3 +48,8 @@ window.addEventListener('resize', heightSection);
 document.addEventListener('input', (event) => {
     inputCheck2(event);
 });
+
+if (!localStorage.getItem('alreadyCome')) {
+    alert('Ce site n\'utilise pas de cookies. Mais les informations du formulaire seront mémorisées et utilisable uniquement pour cette page pour faciliter votre utilisation de ce service.');
+    localStorage.setItem('alreadyCome', 'ok');
+}
